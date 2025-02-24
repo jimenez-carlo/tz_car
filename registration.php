@@ -4,10 +4,12 @@
 <div class="container-fluid py-5">
   <div class="container pt-5 pb-3">
     <h1 class="display-4 text-uppercase text-center mb-5">Signup Now</h1>
+    <?= isset($_POST['submit']) ? createUser($_POST) : "" ?>
     <div class="row">
       <div class="col-lg-7 mb-2">
         <div class="contact-form bg-light mb-4" style="padding: 30px;">
-          <form>
+          <form method="post">
+            <input type="hidden" name="access_id" value="3">
             <div class="row">
               <div class="col-6 form-group">
                 <input type="text" class="form-control p-4" placeholder="First Name" required="required" name="first_name">
@@ -31,7 +33,7 @@
               <input type="number" class="form-control p-4" placeholder="Phone No" required="required" name="phone_no">
             </div>
             <div class="form-group">
-              <select class="custom-select px-4 mb-3" style="height: 50px;" name="pickup_location_id" required>
+              <select class="custom-select px-4 mb-3" style="height: 50px;" name="gender_id" required>
                 <option selected>Gender</option>
                 <?php foreach (get_list("select * from tbl_gender where deleted_flag = 0") as $gender) { ?>
                   <option value="<?= $gender['gender_id'] ?>"><?= $gender['gender'] ?></option>
@@ -39,7 +41,7 @@
               </select>
             </div>
             <div>
-              <button class="btn btn-primary py-3 px-5" type="submit">Register</button>
+              <button class="btn btn-primary py-3 px-5" type="submit" name="submit">Register</button>
             </div>
           </form>
         </div>

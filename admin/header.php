@@ -34,7 +34,7 @@ if (isset($_SESSION['user'])) {
 
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -43,12 +43,29 @@ if (isset($_SESSION['user'])) {
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <!-- Template Stylesheet -->
     <!-- <link href="css/style.css" rel="stylesheet"> -->
 
   </head>
+  <style>
+    .select2-selection__rendered {
+      line-height: 50px !important;
+    }
+
+    .select2-container .select2-selection--single {
+      height: 50px !important;
+    }
+
+    .select2-selection__arrow {
+      height: 50px !important;
+    }
+  </style>
 
   <body>
+
 
     <!-- Navbar Start -->
     <div class="container-fluid position-relative nav-bar p-0">

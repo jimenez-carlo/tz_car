@@ -1,194 +1,98 @@
 <?php include('../includes/functions.php') ?>
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Matrix lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Matrix admin lite design, Matrix admin lite dashboard bootstrap 5 dashboard template" />
-  <meta name="description" content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework" />
-  <meta name="robots" content="noindex,nofollow" />
-  <title>PDCMS</title>
-  <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/logo.png" />
-
-  <!-- Custom CSS -->
-  <link href="../assets/libs/flot/css/float-chart.css" rel="stylesheet" />
-  <!-- Custom CSS -->
-  <link href="../dist/css/style.min.css" rel="stylesheet" />
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  <link href="../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
-  <script src='../js/calendar.js'></script>
-
-</head>
-<style>
-  #navbarSupportedContent {
-    background: #2255b1 !important;
+<?php
+if (isset($_SESSION['user'])) {
+  if ($_SESSION['user']->access_id == 3) {
+  } else {
+    header('location:../logout.php');
   }
+} ?>
+<!DOCTYPE php>
+<php lang="en">
 
-  nav.navbar-dark,
-  header.topbar,
-  a.navbar-brand,
-  aside.left-sidebar,
-  #sidebarnav,
-  a.sidebar-link {
-    background: #2255b9 !important;
-  }
+  <head>
+    <meta charset="utf-8">
+    <title>TZ CAR RENTAL</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free php Templates" name="keywords">
+    <meta content="Free php Templates" name="description">
 
-  .logo {
-    height: 40px;
-  }
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
 
-  .cdetails {
-    list-style-type: none;
-  }
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap" rel="stylesheet">
 
-  body {
-    font-family: 'Nunito Sans' !important;
-  }
-</style>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap4.js"></script>
 
-<body>
-  <!-- ============================================================== -->
-  <!-- Preloader - style you can find in spinners.css -->
-  <!-- ============================================================== -->
-  <div class="preloader">
-    <div class="lds-ripple">
-      <div class="lds-pos"></div>
-      <div class="lds-pos"></div>
-    </div>
-  </div>
-  <!-- ============================================================== -->
-  <!-- Main wrapper - style you can find in pages.scss -->
-  <!-- ============================================================== -->
-  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-    <!-- ============================================================== -->
-    <!-- Topbar header - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <header class="topbar" data-navbarbg="skin5">
-      <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-        <div class="navbar-header" data-logobg="skin5">
-          <!-- ============================================================== -->
-          <!-- Logo -->
-          <!-- ============================================================== -->
-          <a class="navbar-brand" href="index.php">
-            <!-- Logo icon -->
-            <img src="../images/logo.png" alt="" class="logo">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap4.css">
 
-            <h2 class="ms-4">PDCMS</h2>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <!-- Template Stylesheet -->
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+
+  </head>
+  <style>
+    .select2-selection__rendered {
+      line-height: 50px !important;
+    }
+
+    .select2-container .select2-selection--single {
+      height: 50px !important;
+    }
+
+    .select2-selection__arrow {
+      height: 50px !important;
+    }
+  </style>
+
+  <body>
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative nav-bar p-0">
+      <div class="position-relative" style="z-index: 9;">
+        <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-3 py-lg-0 pl-3 pl-lg-5">
+          <a href="" class="navbar-brand">
+            <h1 class="text-uppercase text-primary mb-1">TZ CAR RENTAL</h1>
           </a>
-          <!-- ============================================================== -->
-          <!-- End Logo -->
-          <!-- ============================================================== -->
-          <!-- ============================================================== -->
-          <!-- Toggle which is visible on mobile only -->
-          <!-- ============================================================== -->
-          <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Logo -->
-        <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-          <!-- ============================================================== -->
-          <!-- toggle and nav items -->
-          <!-- ============================================================== -->
-          <ul class="navbar-nav float-start me-auto">
-            <li class="nav-item d-none d-lg-block">
-              <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a>
-            </li>
-            <!-- ============================================================== -->
-            <!-- User profile and search -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- User profile and search -->
-            <!-- ============================================================== -->
-          </ul>
-          <ul class="navbar-nav float-end">
-            <!-- <li class="nav-item">
-              <a class="nav-link waves-effect waves-dark sidebar-link " href="../logout.php" aria-expanded="false"><i class="mdi mdi-power"></i><span class="hide-menu">Log Out</span></a>
-            </li> -->
+          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+            <div class="navbar-nav ml-auto py-0">
+              <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle <?= strpos($_SERVER['REQUEST_URI'], 'booking') !== false ? "active" : ""  ?>" data-toggle="dropdown">Booking</a>
+                <div class="dropdown-menu rounded-0 m-0">
+                  <a href="booking_list.php" class="dropdown-item <?= strpos($_SERVER['REQUEST_URI'], 'booking_list.php') !== false ? "active" : ""  ?>">My Book</a>
+                  <a href="booking_create.php" class="dropdown-item <?= strpos($_SERVER['REQUEST_URI'], 'booking_create.php') !== false ? "active" : ""  ?>">Create</a>
+                </div>
+              </div>
 
-            <?php $id = $_SESSION['user']->id ?>
-            <?php $default = get_one("select u.id,ui.first_name,ui.municipality,ui.barangay,ui.email,ui.contact,u.username,u.password from tbl_user u inner join tbl_userinfo ui on ui.id = u.id where u.id = '$id'") ?>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31">
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
 
-                <a class="dropdown-item" href="#"><i class="fa fa-user me-1 ms-1"></i><?= ucfirst($default->first_name); ?></a>
-                <a class="dropdown-item" href="../logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a>
-              </ul>
-            </li>
-          </ul>
-          <!-- ============================================================== -->
-          <!-- User profile and search -->
-          <!-- ============================================================== -->
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <!-- ============================================================== -->
-    <!-- End Topbar header -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Left Sidebar - style you can find in sidebar.scss  -->
-    <!-- ============================================================== -->
-    <aside class="left-sidebar" data-sidebarbg="skin5">
-      <!-- Sidebar scroll-->
-      <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-          <ul id="sidebarnav" class="pt-4">
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link waves-effect waves-dark sidebar-link bg-dark" disabled>
-                <i class="mdi mdi-view-dashboarasdd"></i>
 
-                <?php
-                if (isset($_SESSION['user'])) {
-                  if ($_SESSION['user']->access_id == 5) {
-                    echo
-                    ucfirst(
-                      $default->first_name
-                    );
-                  }
-                }
-                ?>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link bg-dark" href="index.php" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link bg-dark" href="clinics.php" aria-expanded="false"><i class="mdi mdi-tooth"></i><span class="hide-menu">Clinics</span></a>
-            </li>
-            <li class="sidebar-item">
-
-              <?php
-              if (strpos($_SERVER['REQUEST_URI'], 'appointments') !== false) {
-                query("DELETE from tbl_notification where dentist_id = " . $_SESSION['user']->id);
-              }
-              $count = get_one("select count(*) as result from tbl_notification where dentist_id = " . $_SESSION['user']->id)->result ?? 0;
-              ?>
-              <a class="sidebar-link waves-effect waves-dark sidebar-link bg-dark" href="appointments.php" aria-expanded="false"><i class="mdi mdi-calendar-multiple-check"></i><span class="hide-menu">Appointments (<?= $count ?>)</span></a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link bg-dark" href="patient_history.php" aria-expanded="false"><i class="mdi mdi-calendar"></i><span class="hide-menu">Patient History</span></a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link bg-dark" href="edit.php" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Edit Account Details</span></a>
-            </li>
-          </ul>
+              <a href="../logout.php" class="nav-item nav-link">Logout</a>
+            </div>
+          </div>
         </nav>
-        <!-- End Sidebar navigation -->
       </div>
-      <!-- End Sidebar scroll-->
-    </aside>
+    </div>
+    <!-- Navbar End -->

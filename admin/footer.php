@@ -48,12 +48,31 @@
 <script src="../lib/tempusdominus/js/moment.min.js"></script>
 <script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="../js/main.js"></script>
 <script>
-  new DataTable('table');
+  $(document).ready(function() {
+    //  load table
+    new DataTable('table', {
+      ordering: false // Disables sorting on all columns
+    });
+
+    // load image
+    if ($(".input-image").length && $("#preview").length) {
+      $(".input-image").on("change", function(evt) {
+        const file = this.files[0];
+        if (file) {
+          $("#preview").attr("src", URL.createObjectURL(file));
+        }
+      });
+    }
+
+    $('.select2').select2();
+  });
 </script>
+
 </body>
 
 </html>

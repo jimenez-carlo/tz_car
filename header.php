@@ -3,7 +3,7 @@
 if (isset($_SESSION['user'])) {
   if ($_SESSION['user']->access_id == 1 || $_SESSION['user']->access_id == 2) {
     header('location:admin');
-  } else {
+  } else if ($_SESSION['user']->access_id == 3) {
     header('location:client');
   }
 } ?>
@@ -25,7 +25,7 @@ if (isset($_SESSION['user'])) {
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -99,7 +99,7 @@ if (isset($_SESSION['user'])) {
 
 
     <!-- Search Start -->
-    <form method="get">
+    <!-- <form method="get">
       <div class="container-fluid bg-white pt-3 px-lg-5">
         <div class="row mx-n2">
           <div class="col-xl-4 col-lg-6 col-md-6 px-2">
@@ -110,44 +110,36 @@ if (isset($_SESSION['user'])) {
               <?php } ?>
             </select>
           </div>
-          <!-- <div class="col-xl-2 col-lg-6 col-md-6 px-2">
-            <select class="custom-select px-4 mb-3" style="height: 50px;">
-              <option selected>Drop Location</option>
-              <option value="1">Location 1</option>
-              <option value="2">Location 2</option>
-              <option value="3">Location 3</option>
-            </select>
-          </div> -->
-          <div class="col-xl-2 col-lg-6 col-md-6 px-2">
-            <div class="date mb-3" id="date" data-target-input="nearest">
-              <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Pickup Date"
-                data-target="#date" data-toggle="datetimepicker" name="pickup_date" />
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-6 col-md-6 px-2">
-            <div class="date mb-3" id="date2" data-target-input="nearest">
-              <input type="text" class="form-control p-4 datetimepicker-input" placeholder="End Date"
-                data-target="#date2" data-toggle="datetimepicker" name="end_date" />
-            </div>
-          </div>
-          <!-- <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-            <div class="time mb-3" id="time" data-target-input="nearest">
-              <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Pickup Time"
-                data-target="#time" data-toggle="datetimepicker" />
-            </div>
-          </div> -->
-          <div class="col-xl-2 col-lg-6 col-md-6 px-2">
-            <select class="custom-select px-4 mb-3" style="height: 50px;" name="car_">
-              <option selected>Select A Car</option>
-              <?php foreach (get_list("select c.* from tbl_cars c where c.deleted_flag = 0 group by c.model") as $car) { ?>
-                <option value="<?= $car['car_id'] ?>"><?= $car['model'] ?></option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-            <button class="btn btn-primary btn-block mb-3" type="submit" style="height: 50px;">Search</button>
-          </div>
-        </div>
+
+    <div class="col-xl-2 col-lg-6 col-md-6 px-2">
+      <div class="date mb-3" id="date" data-target-input="nearest">
+        <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Pickup Date"
+          data-target="#date" data-toggle="datetimepicker" name="pickup_date" />
       </div>
-    </form>
+    </div>
+    <div class="col-xl-2 col-lg-6 col-md-6 px-2">
+      <div class="date mb-3" id="date2" data-target-input="nearest">
+        <input type="text" class="form-control p-4 datetimepicker-input" placeholder="End Date"
+          data-target="#date2" data-toggle="datetimepicker" name="end_date" />
+      </div>
+    </div>
+
+    <div class="col-xl-2 col-lg-6 col-md-6 px-2">
+      <select class="custom-select px-4 mb-3" style="height: 50px;" name="car_">
+        <option selected>Select A Car</option>
+        <?php foreach (
+          get_list("select c.* from tbl_cars c where c.deleted_flag = 0 and c.car_id IN (
+    SELECT MIN(car_id) FROM tbl_cars WHERE deleted_flag = 0 GROUP BY model
+)") as $car
+        ) { ?>
+          <option value="<?= $car['car_id'] ?>"><?= $car['model'] ?></option>
+        <?php } ?>
+      </select>
+    </div>
+    <div class="col-xl-2 col-lg-4 col-md-6 px-2">
+      <button class="btn btn-primary btn-block mb-3" type="submit" style="height: 50px;">Search</button>
+    </div>
+    </div>
+    </div>
+    </form> -->
     <!-- Search End -->
