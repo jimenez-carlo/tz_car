@@ -4,17 +4,29 @@
     <div id="header-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="w-100" src="img/carousel-1.jpg" alt="Image">
+                <img class="w-100" src="img/carbg2.jpg" alt="Image" style="    height: 600px;
+    object-fit: cover;
+    object-position: bottom;">
+                <!-- <img class="w-100" src="img/carousel-1.jpg" alt="Image" height=""> -->
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
-                        <h4 class="text-white text-uppercase mb-md-3">Rent A Car</h4>
+                        <!-- <h4 class="text-white text-uppercase mb-md-3">Rent A Car</h4>
                         <h1 class="display-1 text-white mb-md-4">Best Rental Cars In Your Location</h1>
                         <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Reserve Now</a>
+                         -->
+                        <h2 class="text-dark text-uppercase mb-md-3">Rent A Car</h2>
+                        <h1 class="display-1 text-primary mb-md-4">at TZ CAR RENTAL (URDANETA)</h1>
+                        <p class="text-white">Here at TZ CAR RENTAL (URDANETA)<br>
+                            Urdaneta, Pangasinan<br>Enjoy every moment with your family<br>
+                            We offer a wide range of cars for rent and fast response!</p>
+                        <a href="registration.php" class="btn btn-primary py-md-3 px-md-5 mt-2">JOIN US</a>
+                        <!-- <h4 class="text-white text-uppercase mb-md-3">Rent your Car <br><span>at TZ CAR RENTAL (URDANETA)</span></h4>
+                        <button class="cn"><a href="registration.php">JOIN US</a></button> -->
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img class="w-100" src="img/carousel-2.jpg" alt="Image">
+            <!-- <div class="carousel-item">
+                <img class="w-100" src="img/carbg2.jpg" alt="Image">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
                         <h4 class="text-white text-uppercase mb-md-3">Rent A Car</h4>
@@ -22,9 +34,9 @@
                         <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Reserve Now</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+        <!-- <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
             <div class="btn btn-dark" style="width: 45px; height: 45px;">
                 <span class="carousel-control-prev-icon mb-n2"></span>
             </div>
@@ -33,14 +45,14 @@
             <div class="btn btn-dark" style="width: 45px; height: 45px;">
                 <span class="carousel-control-next-icon mb-n2"></span>
             </div>
-        </a>
+        </a> -->
     </div>
 </div>
 <!-- Carousel End -->
 
 
 <!-- About Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
         <h1 class="display-1 text-primary text-center">01</h1>
         <h1 class="display-4 text-uppercase text-center mb-5">Welcome To <span class="text-primary">TZ CAR RENTAL</span></h1>
@@ -77,12 +89,12 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- About End -->
 
 
 <!-- Services Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
         <h1 class="display-1 text-primary text-center">02</h1>
         <h1 class="display-4 text-uppercase text-center mb-5">Our Services</h1>
@@ -161,7 +173,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Services End -->
 
 
@@ -182,7 +194,7 @@
 
 
 <!-- Rent A Car Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
         <h1 class="display-1 text-primary text-center">03</h1>
         <h1 class="display-4 text-uppercase text-center mb-5">Find Your Car</h1>
@@ -315,7 +327,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Rent A Car End -->
 
 
@@ -380,7 +392,7 @@
 
 
 <!-- Banner Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row mx-0">
             <div class="col-lg-6 px-0">
@@ -405,7 +417,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Banner End -->
 
 
@@ -525,7 +537,7 @@
 
 
 <!-- Vendor Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="owl-carousel vendor-carousel">
             <div class="bg-light p-4">
@@ -554,7 +566,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Vendor End -->
 
 <?php include("footer.php") ?>

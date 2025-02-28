@@ -40,7 +40,7 @@ if (isset($_SESSION['user'])) {
 
   <body>
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark py-3 px-lg-5 d-none d-lg-block">
+    <!-- <div class="container-fluid bg-dark py-3 px-lg-5 d-none d-lg-block">
       <div class="row">
         <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
           <div class="d-inline-flex align-items-center">
@@ -69,7 +69,7 @@ if (isset($_SESSION['user'])) {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Topbar End -->
 
 
@@ -79,7 +79,7 @@ if (isset($_SESSION['user'])) {
       <div class="position-relative" style="z-index: 9;">
         <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-3 py-lg-0 pl-3 pl-lg-5">
           <a href="" class="navbar-brand">
-            <h1 class="text-uppercase text-primary mb-1">TZ CAR RENTAL</h1>
+            <h1 class="text-uppercase text-primary mb-1">TZ CAR RENTAL (URDANETA)</h1>
           </a>
           <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>

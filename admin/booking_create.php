@@ -99,8 +99,11 @@ WHERE b.car_id IS NULL and c.deleted_flag = 0") as $result
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 form-group">
+                            <div class="col-6 form-group">
                                 <img src="../img/payment/default.png" alt="" id="preview" style="width:300px;height:200px">
+                            </div>
+                            <div class="col-6 form-group">
+                                <img src="../img/default.jfif" alt="" id="preview" style="width:300px;height:auto">
                             </div>
                             <div class="col-12 form-group">
                                 <input type="file" class=" input-image" name="img">

@@ -76,7 +76,7 @@
 
 
 <!-- Vendor Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
   <div class="container py-5">
     <div class="owl-carousel vendor-carousel">
       <div class="bg-light p-4">
@@ -105,7 +105,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- Vendor End -->
 
 <?php include("footer.php") ?>

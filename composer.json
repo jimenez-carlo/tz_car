@@ -1,0 +1,12 @@
+{
+    "name": "wsi/tz_car",
+    "require": {
+        "google/apiclient": "^2.18"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Wsi\\TzCar\\": "src/"
+        }
+    }
+}

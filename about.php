@@ -15,14 +15,17 @@
 <!-- About Start -->
 <div class="container-fluid py-5">
   <div class="container pt-5 pb-3">
-    <h1 class="display-4 text-uppercase text-center mb-5">Welcome To <span class="text-primary">TZ CAR RENTAL</span></h1>
+    <h1 class="display-4 text-uppercase text-center mb-5">ABOUT <span class="text-primary">US</span></h1>
     <div class="row justify-content-center">
       <div class="col-lg-10 text-center">
-        <img class="w-75 mb-4" src="img/about.png" alt="">
-        <p>Justo et eos et ut takimata sed sadipscing dolore lorem, et elitr labore labore voluptua no rebum sed, stet voluptua amet sed elitr ea dolor dolores no clita. Dolores diam magna clita ea eos amet, amet rebum voluptua vero vero sed clita accusam takimata. Nonumy labore ipsum sea voluptua sea eos sit justo, no ipsum sanctus sanctus no et no ipsum amet, tempor labore est labore no. Eos diam eirmod lorem ut eirmod, ipsum diam sadipscing stet dolores elitr elitr eirmod dolore. Magna elitr accusam takimata labore, et at erat eirmod consetetur tempor eirmod invidunt est, ipsum nonumy at et.</p>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.7407784734482!2d120.5572881!3d15.974907900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33913f00708f31cb%3A0x6858fcfd38045593!2sTZ%20Car%20Trading!5e0!3m2!1sen!2sph!4v1739430596312!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <br><br>
+        <p>We are pleased you chose TZ CAR RENTAL (URDANETA) Urdaneta to rent a car, We have lots of cars to choose from and we are happy to serve you always anytime anywhere!</p>
       </div>
     </div>
-    <div class="row mt-3">
+    <!-- <div class="row mt-3">
       <div class="col-lg-4 mb-2">
         <div class="d-flex align-items-center bg-light p-4 mb-4" style="height: 150px;">
           <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary ml-n4 mr-4" style="width: 100px; height: 100px;">
@@ -47,14 +50,14 @@
           <h4 class="text-uppercase m-0">Lots Of Pickup Locations</h4>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 <!-- About End -->
 
 
 <!-- Banner Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
   <div class="container py-5">
     <div class="row mx-0">
       <div class="col-lg-6 px-0">
@@ -79,12 +82,12 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- Banner End -->
 
 
 <!-- Vendor Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
   <div class="container py-5">
     <div class="owl-carousel vendor-carousel">
       <div class="bg-light p-4">
@@ -113,7 +116,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- Vendor End -->
 
 <?php include("footer.php") ?>

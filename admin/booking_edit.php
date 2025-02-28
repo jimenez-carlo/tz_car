@@ -109,12 +109,21 @@ WHERE (b.car_id IS NULL or b.car_id = $data->car_id )and c.deleted_flag = 0 ") a
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 form-group">
+                            <div class="col-6 form-group">
                                 <img src="../img/payment/<?= $data->img ?>" alt="" id="preview" style="width:300px;height:200px">
+                            </div>
+                            <div class="col-6 form-group">
+                                <img src="../img/default.jfif" alt="" id="preview" style="width:300px;height:auto">
                             </div>
                             <div class="col-12 form-group">
                                 <input type="file" class=" input-image" name="img">
                             </div>
+                            <!-- <div class="col-12 form-group">
+                                <img src="../img/payment/<?= $data->img ?>" alt="" id="preview" style="width:300px;height:200px">
+                            </div>
+                            <div class="col-12 form-group">
+                                <input type="file" class=" input-image" name="img">
+                            </div> -->
                         </div>
 
                         <div class="form-group mb-0">
@@ -128,10 +137,9 @@ WHERE (b.car_id IS NULL or b.car_id = $data->car_id )and c.deleted_flag = 0 ") a
 
         <div class="row">
             <div class="col-lg-12 mb-5">
-                <table class="table table-hover text-uppercase">
+                <!-- <table class="table table-hover text-uppercase">
                     <thead>
                         <tr>
-                            <!-- <th scope="col">Status</th> -->
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
                         </tr>
@@ -148,7 +156,7 @@ WHERE (b.car_id IS NULL or b.car_id = $data->car_id )and c.deleted_flag = 0 ") a
                             </tr>
                         <?php  } ?>
                     </tbody>
-                </table>
+                </table> -->
 
             </div>
         </div>

@@ -6,7 +6,7 @@
     <h1 class="display-4 text-uppercase text-center mb-5">Signup Now</h1>
     <?= isset($_POST['submit']) ? createUser($_POST) : "" ?>
     <div class="row">
-      <div class="col-lg-7 mb-2">
+      <div class="col-lg-12 mb-2">
         <div class="contact-form bg-light mb-4" style="padding: 30px;">
           <form method="post">
             <input type="hidden" name="access_id" value="3">
@@ -46,7 +46,7 @@
           </form>
         </div>
       </div>
-      <div class="col-lg-5 mb-2">
+      <!-- <div class="col-lg-5 mb-2">
         <div class="bg-secondary d-flex flex-column justify-content-center px-5 mb-4" style="height: 435px;">
           <div class="d-flex mb-3">
             <i class="fa fa-2x fa-map-marker-alt text-primary flex-shrink-0 mr-3"></i>
@@ -72,7 +72,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -80,7 +80,7 @@
 
 
 <!-- Vendor Start -->
-<div class="container-fluid py-5">
+<!-- <div class="container-fluid py-5">
   <div class="container py-5">
     <div class="owl-carousel vendor-carousel">
       <div class="bg-light p-4">
@@ -109,7 +109,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- Vendor End -->
 
 <?php include("footer.php") ?>

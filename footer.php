@@ -33,7 +33,7 @@
 </form>
 
 <!-- Footer Start -->
-<div class="container-fluid bg-secondary py-5 px-sm-3 px-md-5" style="margin-top: 90px;">
+<!-- <div class="container-fluid bg-secondary py-5 px-sm-3 px-md-5" style="margin-top: 90px;">
   <div class="row pt-5">
     <div class="col-lg-3 col-md-6 mb-5">
       <h4 class="text-uppercase text-light mb-4">Get In Touch</h4>
@@ -101,7 +101,7 @@
 </div>
 <div class="container-fluid bg-dark py-4 px-sm-3 px-md-5">
   <p class="mb-2 text-center text-body">&copy; <a href="#">TZ CAR RENTAL</a>. All Rights Reserved.</p>
-</div>
+</div> -->
 <!-- Footer End -->
 
 
