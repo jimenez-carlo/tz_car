@@ -1,9 +1,9 @@
 <?php
 session_start();
-$host = "db";
-$username = "admin";
-$password = "admin123";
-$database = "db_tarz";
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "carproject";
 
 $conn = mysqli_connect($host, $username, $password, $database);
 if (!$conn) {
