@@ -1,3 +1,11 @@
+<?php include('../includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['user']->access_id == 1) {
+    } else {
+        header('location:../logout.php');
+    }
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,20 +48,15 @@
         }
 
         .navbar {
-            width: 100%;
+            display: flex;
+            justify-content: space-between;
             height: 75px;
-            margin: auto;
             background-color: #333;
             padding: 10px;
             border-radius: 0px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
         }
 
         .icon {
-            width: 200px;
             float: left;
             height: 70px;
         }
@@ -68,7 +71,6 @@
         }
 
         .menu {
-            width: 400px;
             float: left;
             height: 70px;
 
@@ -115,7 +117,6 @@
             color: #333;
             background: linear-gradient(to bottom, #ffffff, #f0f0f0);
             /* Add a gradient background */
-
         }
 
         .content-table thead tr {
@@ -151,7 +152,7 @@
 
 
         .header {
-            margin-top: 20px;
+            margin-top: 0;
             margin-left: 0;
             text-align: center;
         }
@@ -228,15 +229,7 @@
             color: black;
         }
     </style>
-    <?php
 
-    require_once('connection.php');
-    $query = "SELECT *from booking ORDER BY BOOK_ID DESC";
-    $queryy = mysqli_query($con, $query);
-    $num = mysqli_num_rows($queryy);
-
-
-    ?>
     <div class="navbar">
         <div class="icon">
             <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
@@ -245,66 +238,54 @@
             <ul>
                 <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
                 <li><a href="adminusers.php">USERS</a></li>
-                <li><a href="admindash.php">FEEDBACKS</a></li>
+                <li><a href="index.php">FEEDBACKS</a></li>
 
                 <li><a href="adminbook.php">RENT REQUEST</a></li>
-                <li> <button class="nn"><a href="index.php">LOGOUT</a></button></li>
+                <li> <button class="nn"><a href="../logout.php">LOGOUT</a></button></li>
             </ul>
         </div>
     </div>
     <div class="hai">
         <div class="header-container">
-            <h1 class="header">RENT HISTORY/PROCESS</h1>
+            <h1 class="header">USERS</h1>
+
         </div>
         <div class="table-container">
             <table class="content-table">
                 <thead>
                     <tr>
-                        <th>CAR ID</th>
+                        <th>NAME</th>
                         <th>EMAIL</th>
-                        <th>BOOK PLACE</th>
-                        <th>BOOK DATE</th>
-                        <th>DURATION</th>
+                        <th>LICENSE NUMBER</th>
                         <th>PHONE NUMBER</th>
-                        <th>DESTINATION</th>
-                        <th>RETURN DATE</th>
-                        <th>BOOKING STATUS</th>
-                        <th>APPROVE</th>
-                        <th>CAR RETURNED</th>
-                        <th>DELETE</th>
+                        <th>GENDER</th>
+                        <th>DELETE USERS</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?= (isset($_POST['delete'])) ? deleteItem("users", "EMAIL", $_POST['EMAIL']) : ''; ?>
                     <?php
 
 
-                    while ($res = mysqli_fetch_array($queryy)) {
-
-
+                    foreach (get_list("select *from users") as $key => $res) {
                     ?>
                         <tr class="active-row">
-
-                            <td><?php echo $res['CAR_ID']; ?></php>
+                            <td><?php echo $res['FNAME'] . "  " . $res['LNAME']; ?></php>
                             </td>
                             <td><?php echo $res['EMAIL']; ?></php>
                             </td>
-                            <td><?php echo $res['BOOK_PLACE']; ?></php>
-                            </td>
-                            <td><?php echo $res['BOOK_DATE']; ?></php>
-                            </td>
-                            <td><?php echo $res['DURATION']; ?></php>
+                            <td><?php echo $res['LIC_NUM']; ?></php>
                             </td>
                             <td><?php echo $res['PHONE_NUMBER']; ?></php>
                             </td>
-                            <td><?php echo $res['DESTINATION']; ?></php>
+                            <td><?php echo $res['GENDER']; ?></php>
                             </td>
-                            <td><?php echo $res['RETURN_DATE']; ?></php>
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" name="EMAIL" value="<?= $res['EMAIL'] ?>">
+                                    <button type="submit" name="delete" class="but">DELETE USER</button>
+                                </form>
                             </td>
-                            <td><?php echo $res['BOOK_STATUS']; ?></php>
-                            </td>
-                            <td><button type="submit" class="but" name="approve"><a href="approve.php?id=<?php echo $res['BOOK_ID'] ?>">APPROVE</a></button></td>
-                            <td><button type="submit" class="but" name="approve"><a href="adminreturn.php?id=<?php echo $res['CAR_ID'] ?>&bookid=<?php echo $res['BOOK_ID'] ?>">RETURNED</a></button></td>
-                            <td><button type="submit" class="but" name="delete"><a href="deletebooking.php?id=<?php echo $res['BOOK_ID'] ?>">DELETE</a></button></td>
                         </tr>
                     <?php } ?>
                 </tbody>

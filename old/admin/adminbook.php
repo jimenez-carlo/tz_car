@@ -1,3 +1,11 @@
+<?php include('../includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['user']->access_id == 1) {
+    } else {
+        header('location:../logout.php');
+    }
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,20 +48,15 @@
         }
 
         .navbar {
-            width: 100%;
             height: 75px;
-            margin: auto;
             background-color: #333;
             padding: 10px;
             border-radius: 0px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            display: flex;
+            justify-content: space-between;
         }
 
         .icon {
-            width: 200px;
             float: left;
             height: 70px;
         }
@@ -68,7 +71,6 @@
         }
 
         .menu {
-            width: 400px;
             float: left;
             height: 70px;
 
@@ -95,29 +97,10 @@
             font-family: Arial;
             font-weight: bold;
             transition: 0.4s ease-in-out;
-
         }
 
         ul li a:hover {
             color: #ff9900;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            margin-top: 75px;
-            /* Added margin-top to move the header below the navbar */
-
-        }
-
-        .table-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            border-radius: 10px;
         }
 
         .content-table {
@@ -134,6 +117,7 @@
             color: #333;
             background: linear-gradient(to bottom, #ffffff, #f0f0f0);
             /* Add a gradient background */
+
         }
 
         .content-table thead tr {
@@ -169,7 +153,7 @@
 
 
         .header {
-            margin-top: 0;
+            margin-top: 20px;
             margin-left: 0;
             text-align: center;
         }
@@ -177,7 +161,7 @@
 
         .nn {
             width: 100px;
-            /* background: #ff7200; */
+            background: #ff7200;
             border: none;
             height: 40px;
             font-size: 18px;
@@ -185,16 +169,17 @@
             cursor: pointer;
             color: white;
             transition: 0.4s ease;
-            background-color: #ff7200;
-
         }
 
+        .nn:hover {
+            background: #ff9900;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
 
         .nn a {
             text-decoration: none;
             color: black;
             font-weight: bold;
-
         }
 
         .add {
@@ -245,90 +230,96 @@
             color: black;
         }
     </style>
-    <?php
 
-    require_once('connection.php');
-    $query = "SELECT *from cars";
-    $queryy = mysqli_query($con, $query);
-    $num = mysqli_num_rows($queryy);
-
-    if ($queryy) {
-    ?>
-        <div class="navbar">
-            <div class="icon">
-                <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
-            </div>
-            <div class="menu">
-                <ul>
-                    <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
-                    <li><a href="adminusers.php">USERS</a></li>
-                    <li><a href="admindash.php">FEEDBACKS</a></li>
-
-                    <li><a href="adminbook.php">RENT REQUEST</a></li>
-                    <li> <button class="nn"><a href="index.php">LOGOUT</a></button></li>
-                </ul>
-            </div>
+    <div class="navbar">
+        <div class="icon">
+            <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
         </div>
-        <div class="hai">
-            <div class="header-container">
-                <h1 class="header">CARS</h1>
-                <button class="add"><a href="addcar.php">+ ADD CARS</a></button>
-            </div>
-            <div class="table-container">
-                <table class="content-table">
-                    <thead>
-                        <tr>
+        <div class="menu">
+            <ul>
+                <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
+                <li><a href="adminusers.php">USERS</a></li>
+                <li><a href="index.php">FEEDBACKS</a></li>
 
-                            <th>CAR ID</th>
-                            <th>CAR NAME</th>
-                            <th>FUEL TYPE</th>
-                            <th>CAPACITY</th>
-                            <th>PRICE</th>
-                            <th>AVAILABLE</th>
-                            <th>DELETE</th>
+                <li><a href="adminbook.php">RENT REQUEST</a></li>
+                <li> <button class="nn"><a href="../logout.php">LOGOUT</a></button></li>
+            </ul>
+        </div>
+    </div>
+    <div class="hai">
+        <div class="header-container">
+            <h1 class="header">RENT HISTORY/PROCESS</h1>
+        </div>
+        <div class="table-container">
+            <table class="content-table">
+                <thead>
+                    <tr>
+                        <th>IMG</th>
+                        <th>CAR ID</th>
+                        <th>EMAIL</th>
+                        <th>BOOK PLACE</th>
+                        <th>BOOK DATE</th>
+                        <th>DURATION</th>
+                        <th>PHONE NUMBER</th>
+                        <th>DESTINATION</th>
+                        <th>RETURN DATE</th>
+                        <th>BOOKING STATUS</th>
+                        <th>TOTAL</th>
+                        <th>SS</th>
+                        <th>Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?= (isset($_POST['confirm'])) ? changeBookStatus($_POST['id'], "CONFIRMED") : ''; ?>
+                    <?= (isset($_POST['complete'])) ? changeBookStatus($_POST['id'], "COMPLETED") : ''; ?>
+                    <?= (isset($_POST['reject'])) ? changeBookStatus($_POST['id'], "REJECTED") : ''; ?>
+                    <?php
+
+
+                    foreach (get_list("SELECT b.CAR_ID,b.EMAIL,b.BOOK_PLACE,b.BOOK_DATE,b.DURATION,b.PHONE_NUMBER, b.DESTINATION, b.RETURN_DATE, b.BOOK_STATUS,c.CAR_IMG,b.BOOK_ID,b.BOOK_SS,c.PRICE  from booking b inner join cars c on c.CAR_ID = b.CAR_ID ORDER BY b.BOOK_ID DESC") as $key => $res) {
+
+
+                    ?>
+                        <tr class="active-row">
+                            <td><img src="../images/<?php echo $res['CAR_IMG']; ?>" alt="" width="200" height="150"></td>
+                            <td><?php echo $res['CAR_ID']; ?></php>
+                            </td>
+                            <td><?php echo $res['EMAIL']; ?></php>
+                            </td>
+                            <td><?php echo $res['BOOK_PLACE']; ?></php>
+                            </td>
+                            <td><?php echo $res['BOOK_DATE']; ?></php>
+                            </td>
+                            <td><?php echo $res['DURATION']; ?></php>
+                            </td>
+                            <td><?php echo $res['PHONE_NUMBER']; ?></php>
+                            </td>
+                            <td><?php echo $res['DESTINATION']; ?></php>
+                            </td>
+                            <td><?php echo $res['RETURN_DATE']; ?></php>
+                            </td>
+                            <td><?php echo $res['BOOK_STATUS']; ?></php>
+                            </td>
+                            <td><?php echo number_format($res['DURATION'] * $res['PRICE'], 2); ?></php>
+                            </td>
+                            <td><img src="../images/<?php echo $res['BOOK_SS']; ?>" alt="" width="200" height="150"></td>
+                            <td>
+                                <form method="post" style="display:flex; flex-direction:row">
+                                    <input type="hidden" name="id" value="<?= $res['BOOK_ID'] ?>">
+                                    <button type="submit" class="but" name="confirm">CONFIRM</button>
+                                    <button type="submit" class="but" name="complete">COMPLETE</button>
+                                    <button type="submit" class="but" name="reject">REJECT</button>
+                                </form>
+                            </td>
+                            </td>
+                            <!-- <td><button type="submit" class="but" name="delete"><a href="deletebooking.php?id=<?php echo $res['BOOK_ID'] ?>">DELETE</a></button></td> -->
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-
-
-                        while ($res = mysqli_fetch_array($queryy)) {
-
-
-                        ?>
-                            <tr class="active-row">
-
-                                <td><?php echo $res['CAR_ID']; ?></td>
-                                <td><?php echo $res['CAR_NAME']; ?></td>
-                                <td><?php echo $res['FUEL_TYPE']; ?></td>
-                                <td><?php echo $res['CAPACITY']; ?></td>
-                                <td><?php echo $res['PRICE']; ?></td>
-                                <td><?php
-                                    if ($res['AVAILABLE'] == 'Y') {
-                                        echo 'YES';
-                                    } else {
-                                        echo 'NO';
-                                    }
-
-
-
-
-                                    ?></td>
-                                <td><button type="submit" class="but" name="approve"><a href="deletecar.php?id=<?php echo $res['CAR_ID'] ?>">DELETE CAR</a></button></td>
-
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
-    <?php
-    } else {
-        echo "Error: " . mysqli_error($con);
-    }
-    ?>
+    </div>
 </body>
 
 </html>
-
-</php>

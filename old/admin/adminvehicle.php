@@ -1,8 +1,11 @@
-**Modified Code with Applied Design and Modifications**
-
-Here is the modified code with the applied design and modifications from the original code:
-
-```php
+<?php include('../includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['user']->access_id == 1) {
+    } else {
+        header('location:../logout.php');
+    }
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +31,6 @@ Here is the modified code with the applied design and modifications from the ori
             background-size: cover;
             height: 109vh;
             animation: infiniteScrollBg 50s linear infinite;
-            margin-top: 75px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -45,20 +47,18 @@ Here is the modified code with the applied design and modifications from the ori
         }
 
         .navbar {
-            width: 100%;
+            display: flex;
+            justify-content: space-between;
             height: 75px;
             margin: auto;
             background-color: #333;
             padding: 10px;
             border-radius: 0px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
+
         }
 
         .icon {
-            width: 200px;
+            /* width: 200px; */
             float: left;
             height: 70px;
         }
@@ -73,7 +73,7 @@ Here is the modified code with the applied design and modifications from the ori
         }
 
         .menu {
-            width: 400px;
+            /* width: 400px; */
             float: left;
             height: 70px;
 
@@ -100,10 +100,29 @@ Here is the modified code with the applied design and modifications from the ori
             font-family: Arial;
             font-weight: bold;
             transition: 0.4s ease-in-out;
+
         }
 
         ul li a:hover {
             color: #ff9900;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            margin-top: 75px;
+            /* Added margin-top to move the header below the navbar */
+
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .content-table {
@@ -163,7 +182,7 @@ Here is the modified code with the applied design and modifications from the ori
 
         .nn {
             width: 100px;
-            background: #ff7200;
+            /* background: #ff7200; */
             border: none;
             height: 40px;
             font-size: 18px;
@@ -171,17 +190,16 @@ Here is the modified code with the applied design and modifications from the ori
             cursor: pointer;
             color: white;
             transition: 0.4s ease;
+            background-color: #ff7200;
+
         }
 
-        .nn:hover {
-            background: #ff9900;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
 
         .nn a {
             text-decoration: none;
             color: black;
             font-weight: bold;
+
         }
 
         .add {
@@ -232,15 +250,7 @@ Here is the modified code with the applied design and modifications from the ori
             color: black;
         }
     </style>
-    <?php
 
-    require_once('connection.php');
-    $query = "select *from feedback";
-    $queryy = mysqli_query($con, $query);
-    $num = mysqli_num_rows($queryy);
-
-
-    ?>
     <div class="navbar">
         <div class="icon">
             <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
@@ -249,47 +259,77 @@ Here is the modified code with the applied design and modifications from the ori
             <ul>
                 <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
                 <li><a href="adminusers.php">USERS</a></li>
-                <li><a href="admindash.php">FEEDBACKS</a></li>
+                <li><a href="index.php">FEEDBACKS</a></li>
 
                 <li><a href="adminbook.php">RENT REQUEST</a></li>
-                <li> <button class="nn"><a href="index.php">LOGOUT</a></button></li>
+                <li> <button class="nn"><a href="../logout.php">LOGOUT</a></button></li>
             </ul>
         </div>
     </div>
     <div class="hai">
         <div class="header-container">
-            <h1 class="header">FEEDBACKS</h1>
+            <h1 class="header">CARS</h1>
+            <button class="add"><a href="addcar.php">+ ADD CARS</a></button>
         </div>
         <div class="table-container">
             <table class="content-table">
                 <thead>
                     <tr>
-                        <th>FEEDBACK_ID</th>
-                        <th>EMAIL</th>
-                        <th>COMMENT</th>
+
+                        <th>IMAGE</th>
+                        <th>CAR ID</th>
+                        <th>CAR NAME</th>
+                        <th>FUEL TYPE</th>
+                        <th>CAPACITY</th>
+                        <th>PRICE</th>
+                        <th>AVAILABLE</th>
+                        <th>DELETE</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?= (isset($_POST['delete'])) ? deleteItem("cars", "CAR_ID", $_POST['id']) : ''; ?>
                     <?php
 
 
-                    while ($res = mysqli_fetch_array($queryy)) {
 
-
+                    foreach (get_list("select * from cars") as $key => $res) {
+                        # code...
                     ?>
                         <tr class="active-row">
-                            <td><?php echo $res['FED_ID']; ?></php>
+
+                            <td><img src="../images/<?php echo $res['CAR_IMG']; ?>" alt="" width="200" height="150"></td>
+                            <td><?php echo $res['CAR_ID']; ?></td>
+                            <td><?php echo $res['CAR_NAME']; ?></td>
+                            <td><?php echo $res['FUEL_TYPE']; ?></td>
+                            <td><?php echo $res['CAPACITY']; ?></td>
+                            <td><?php echo $res['PRICE']; ?></td>
+                            <td><?php
+                                if ($res['AVAILABLE'] == 'Y') {
+                                    echo 'YES';
+                                } else {
+                                    echo 'NO';
+                                }
+
+
+
+
+                                ?></td>
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" name="id" value="<?= $res['CAR_ID'] ?>">
+                                    <button type="submit" name="delete" class="but">DELETE CAR</button>
+                                </form>
                             </td>
-                            <td><?php echo $res['EMAIL']; ?></php>
-                            </td>
-                            <td><?php echo $res['COMMENT']; ?></php>
-                            </td>
+
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
         </div>
     </div>
+
 </body>
 
 </html>
+
+</php>

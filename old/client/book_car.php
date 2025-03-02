@@ -1,0 +1,659 @@
+<?php include('../includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+  if ($_SESSION['user']->access_id == 3) {
+  } else {
+    header('location:../logout.php');
+  }
+} ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Home</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="Stylesheet.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {
+      background-image: url('images/meshbg.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      margin: 50px auto;
+      width: 80%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .container {
+        width: 90%;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .container {
+        width: 100%;
+        padding: 10px;
+      }
+
+      .col-sm-6 {
+        width: 100%;
+      }
+    }
+
+    .contact-us {
+      font-size: 72px;
+      color: #000;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .contact-us strong {
+      font-size: 5cm;
+      color: #555;
+    }
+
+    .form-container {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      padding: 10px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    .form-control:focus {
+      border-color: #ff7200;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    button.btn {
+      background-color: #ff7200;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    button.btn:hover {
+      background-color: #ff9900;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    input[type="submit"].btn.btn-info {
+      background-color: #ff7200;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
+      width: 100%;
+      text-align: center;
+    }
+
+    input[type="submit"].btn.btn-info:hover {
+      background-color: #ff9900;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-to-home-btn {
+      margin-left: 100px;
+      margin-top: 25px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+
+    }
+
+    .hai {
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0)50%, rgba(0, 0, 0, 0)50%), url("../images/carbg2.jpg");
+      background-position: center;
+      background-size: cover;
+      height: 109vh;
+      animation: infiniteScrollBg 50s linear infinite;
+      margin-top: 75px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: url(images/carbg2.jpg);
+    }
+
+    .main {
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0)50%, rgba(0, 0, 0, 0)50%);
+      background-position: center;
+      background-size: cover;
+      height: 109vh;
+      animation: infiniteScrollBg 50s linear infinite;
+    }
+
+    .navbar {
+      height: 75px;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 0px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .icon {
+      float: left;
+      height: 70px;
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 35px;
+      font-family: Arial;
+      padding-left: 20px;
+      float: left;
+      padding-top: 10px;
+    }
+
+    .menu {
+      float: left;
+      height: 70px;
+
+    }
+
+    ul {
+      float: left;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    ul li {
+      list-style: none;
+      margin-left: 62px;
+      margin-top: 27px;
+      font-size: 14px;
+
+    }
+
+    ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-family: Arial;
+      font-weight: bold;
+      transition: 0.4s ease-in-out;
+    }
+
+    ul li a:hover {
+      color: #ff9900;
+    }
+
+    .content-table {
+      border-collapse: collapse;
+      font-size: 1em;
+      min-width: 400px;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      margin: 0 auto;
+      margin-top: 25px;
+      width: 1300px;
+      height: 300px;
+      color: #333;
+      background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+      /* Add a gradient background */
+
+    }
+
+    .content-table thead tr {
+      background-color: orange;
+      color: white;
+      text-align: center;
+    }
+
+    .content-table th,
+    .content-table td {
+      padding: 12px 15px;
+      text-align: center;
+      color: #333;
+    }
+
+    .content-table tbody tr {
+      border-bottom: 1px solid #dddddd;
+    }
+
+    .content-table tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+
+    }
+
+    .content-table tbody tr:last-of-type {
+      border-bottom: 2px solid orange;
+    }
+
+    .content-table thead .active-row {
+      font-weight: bold;
+      color: orange;
+    }
+
+
+    .header {
+      margin-top: 20px;
+      margin-left: 0;
+      text-align: center;
+    }
+
+
+    .nn {
+      width: 100px;
+      background: #ff7200;
+      border: none;
+      height: 40px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      transition: 0.4s ease;
+    }
+
+    .nn:hover {
+      background: #ff9900;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .nn a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    .add {
+      width: 200px;
+      height: 40px;
+
+      background: #ff7200;
+      border: none;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      transition: 0.4s ease;
+      margin: 0 auto;
+    }
+
+    .add:hover {
+      background: #ff9900;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .add a {
+      text-decoration: none;
+      color: black;
+      font-weight: bolder;
+
+    }
+
+    .but {
+      width: 100px;
+      height: 30px;
+      background: #ff7200;
+      border: none;
+      font-size: 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      transition: 0.4s ease;
+    }
+
+    .but:hover {
+      background: #ff9900;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .but a {
+      text-decoration: none;
+      color: black;
+    }
+
+
+    .main {
+      width: 400px;
+      margin: 100px auto 0px auto;
+      margin-top: 30px;
+    }
+
+    .btnn {
+      width: 240px;
+      height: 40px;
+      background: #ff7200;
+      border: none;
+      margin-top: 30px;
+      /* margin-left: 40px; */
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      transition: 0.4s ease;
+      width: 100%;
+    }
+
+    .btnn:hover {
+      background: #fff;
+      color: #ff7200;
+    }
+
+    .btnn a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    h2 {
+      text-align: center;
+      padding: 20px;
+      font-family: sans-serif;
+
+    }
+
+    .register {
+      background-color: rgba(0, 0, 0, 0.6);
+      width: fit-content;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+      color: #fff;
+
+    }
+
+    form#register {
+      margin: 40px;
+      margin-top: 10px;
+
+    }
+
+    label {
+      font-family: sans-serif;
+      font-size: 18px;
+      font-style: italic;
+    }
+
+    input#name {
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      outline: 0;
+      padding: 7px;
+      background-color: #fff;
+      box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+
+    #back {
+      width: 100px;
+      height: 40px;
+      background: #ff7200;
+      border: none;
+      margin-top: 10px;
+      margin-left: 20px;
+      font-size: 18px;
+      border-radius: 25px;
+    }
+
+
+    #back a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+
+    }
+
+    #back a:hover {
+      background: #be5300;
+      color: #ff7200;
+
+    }
+
+    #fam {
+      color: #ff7200;
+      font-family: 'Times New Roman';
+      font-size: 50px;
+      padding-left: 20px;
+      margin-top: -10px;
+      text-align: center;
+      letter-spacing: 2px;
+      display: inline;
+      margin-left: 250px;
+    }
+
+    .reg {
+      width: 100%;
+    }
+
+    .logout-button {
+      width: 100px;
+      height: 40px;
+      background: #ff7200;
+      border: none;
+      font-size: 18px;
+      border-radius: 1000px;
+      cursor: pointer;
+      color: white;
+      transition: 0.4s ease;
+      padding: 0.5em 1em;
+      /* Add padding to make the background proportionate */
+    }
+
+    .logout-button:hover {
+      background-color: #e65c00;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+
+
+  <?= (isset($_POST['submit'])) ? createBook(array_merge($_POST, $_FILES)) : ''; ?>
+
+
+  <div class="navbar">
+    <div class="icon">
+      <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
+    </div>
+    <div class="menu">
+      <ul>
+        <li><a href="index.php">HOME</a></li>
+        <li><a href="aboutus.php">ABOUT</a></li>
+        <li><a href="contactus.php">CONTACT</a></li>
+        <li><a href="create_feedback.php">FEEDBACK</a></li>
+        <li><a href="../logout.php" class="logout-button">LOGOUT</a></li>
+        <li><img src="../images/profile.png" alt="Profile" width="30" height="30" style="border-radius: 50%;"></li>
+        <li>
+          <p class="phello" style="color: white;">HELLO! &nbsp;<a id="pname"><?= $_SESSION['user']->FNAME . " " . $_SESSION['user']->LNAME ?></a></p>
+        </li>
+        <li><a id="stat" href="bookinstatus.php">RENT STATUS</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="hai">
+
+    <?php $car = get_one("select * from cars where CAR_ID = " . $_GET['car_id']) ?>
+    <div class="register">
+      <h2>Book a Car</h2>
+      <form id="register" method="POST" enctype="multipart/form-data">
+        <table>
+          <tr>
+            <td colspan="2">
+              <img src="../images/<?= $car->CAR_IMG ?>" alt="" style="width:310px;height:150px">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Car Name : </label>
+            </td>
+            <td>
+              <input type="text" value="<?= $car->CAR_NAME ?>" disabled><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>FUEL TYPE : </label>
+            </td>
+            <td>
+              <input type="text" value="<?= $car->FUEL_TYPE ?>" disabled><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>CAPACITY : </label>
+            </td>
+            <td>
+              <input type="text" value="<?= $car->CAPACITY ?>" disabled><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>PRICE : </label>
+            </td>
+            <td>
+              <input type="text" value="<?= $car->PRICE ?>" disabled id="price"><br>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>BOOK DATE : </label>
+            </td>
+            <td>
+              <input type="date" name="book_date" required><br>
+            </td>
+          </tr>
+          <td>
+            <label>RETURN DATE : </label>
+          </td>
+          <td>
+            <input type="date" name="return_date" required><br>
+          </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>TOTAL : </label>
+            </td>
+            <td>
+              <input type="text" disabled id="total"><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>DURATION : </label>
+            </td>
+            <td>
+              <input type="number" name="duration" required id="duration"><br>
+            </td>
+          </tr>
+          <tr>
+          <tr>
+            <td>
+              <label>PHONE NO : </label>
+            </td>
+            <td>
+              <input type="number" name="phone_no" required><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>BOOK PLACE: </label>
+            </td>
+            <td>
+              <textarea name="book_place" rows="5" required></textarea><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>DESTINATION: </label>
+            </td>
+            <td>
+              <textarea name="destination" rows="5" required></textarea><br>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <img src="../images/gcash.jpg" alt="" style="width:310px;height:450px">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>SCREEN SHOT: </label>
+            </td>
+            <td>
+              <input type="file" name="image" required>
+            </td>
+          </tr>
+
+        </table>
+
+        <input type="hidden" name="email" value="<?= $_SESSION['user']->EMAIL ?>">
+        <input type="hidden" name="car_id" value="<?= $car->CAR_ID ?>">
+        <input type="hidden" name="price" value="<?= $car->CAR_PRICE ?>">
+        <input type="hidden" name="book_status" value="PENDING">
+        <input type="submit" class="btnn" value="BOOK" name="submit">
+
+
+
+        </input>
+
+      </form>
+    </div>
+  </div>
+  <script>
+    document.getElementById("duration").addEventListener("input", function() {
+      let total = document.getElementById("total");
+      let price = document.getElementById("price").value;
+      let duration = document.getElementById("duration").value;
+      total.value = price * duration;
+    });
+  </script>
+</body>
+
+</html>
+
+
+
+
+</body>
+
+</html>

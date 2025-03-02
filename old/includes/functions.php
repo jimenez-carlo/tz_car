@@ -39,9 +39,15 @@ function has_result($sql)
     return (mysqli_num_rows(query($sql)) > 0) ?  true : false;
 }
 
+// function deleteItem($table, $column,  $id)
+// {
+//     query("update $table set deleted_flag = 1 where $column = $id");
+//     echo success_message("Item Deleted Successfully!");
+// }
+
 function deleteItem($table, $column,  $id)
 {
-    query("update $table set deleted_flag = 1 where $column = $id");
+    query("DELETE FROM $table where $column = $id");
     echo success_message("Item Deleted Successfully!");
 }
 
@@ -166,6 +172,15 @@ function createLocation($data)
     return success_message("Location Created Successfully!");
 }
 
+function createFeedback($data)
+{
+    extract($data);
+
+    query("INSERT INTO `feedback` (`EMAIL`, `COMMENT`) values('" . $_SESSION['user']->EMAIL . "','$comment')");
+    unset($_POST);
+    return success_message("Feedback Created Successfully!");
+}
+
 function updateLocation($data)
 {
     extract($data);
@@ -176,6 +191,17 @@ function updateLocation($data)
     query("UPDATE `tbl_pickup_location` set `location` = '$location' where `pickup_location_id` = '$id'");
     unset($_POST);
     return success_message("Location Updated Successfully!");
+}
+
+function createCarv2($data)
+{
+    extract($data);
+
+    $img = upload_pic($image, "../images");
+    query("INSERT INTO cars(CAR_NAME,FUEL_TYPE,CAPACITY,PRICE,CAR_IMG,AVAILABLE) values('$carname','$ftype',$capacity,$price,'$img','$available')");
+
+    unset($_POST, $_FILES);
+    return success_message("Car Created Successfully!");
 }
 
 function createCar($data)
@@ -233,6 +259,7 @@ function updateCar($data)
     return success_message("Car Updated Successfully!");
 }
 
+
 function createBookAdmin($data)
 {
     extract($data);
@@ -269,6 +296,8 @@ amount) values(
 }
 
 
+
+
 function updateBookAdmin($data)
 {
     extract($data);
@@ -293,6 +322,41 @@ car_id = '$car_id', amount = '$amount' where booking_id = $id");
     return success_message("Book Updated Successfully!");
 }
 
+function createBook($data)
+{
+    extract($data);
+    $img = upload_pic($image, "../images");
+
+    $price = (int)$price * (int)$duration;
+    $id = get_inserted_id("INSERT INTO `booking` 
+(
+CAR_ID, 
+EMAIL,
+BOOK_PLACE,  
+BOOK_DATE,  
+PHONE_NUMBER, 
+DURATION, 
+DESTINATION, 
+RETURN_DATE, 
+PRICE,
+BOOK_STATUS, 
+BOOK_SS) values(
+'$car_id',
+'$email',
+'$book_place',
+'$book_date',
+'$phone_no',
+'$destination',
+'$duration',
+'$return_date',
+'$price',
+'$book_status',
+'$img'
+)");
+
+    unset($_POST, $_FILES);
+    return success_message("Book Created Successfully!", "index.php");
+}
 
 function createBookHistory($booking_id, $booking_status_id)
 {
@@ -303,6 +367,13 @@ function cancelBook($booking_id)
     query("UPDATE tbl_booking set book_status_id = '$book_status_id' where booking_id = $booking_id");
     query("INSERT INTO `tbl_booking_status_history` (booking_status_id, booking_id) values(3, '$booking_id')");
     return success_message("Book Cancelled Successfully!");
+}
+
+function changeBookStatus($id, $book_status)
+{
+    query("UPDATE booking set BOOK_STATUS = '$book_status' where BOOK_ID = $id");
+    // query("INSERT INTO `tbl_booking_status_history` (booking_status_id, booking_id) values(3, '$booking_id')");
+    return success_message("Book Changed Status Successfully!");
 }
 // function createBookAdmin($data)
 // {
@@ -343,11 +414,13 @@ function cancelBook($booking_id)
 function loginUser($data)
 {
     extract($data);
-    $result = query("SELECT * FROM `tbl_users` WHERE (username = '$username' OR email = '$username') ");
+    $result = query("SELECT * FROM `users` WHERE ( email = '$username') ");
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_object($result)) {
-            if (password_verify($password, $row->password)) {
+            if (password_verify($password, $row->PASSWORD)) {
                 $_SESSION['user'] = $row;
+                $_SESSION['user']->access_id = 3;
+
                 echo "<script>location.reload();</script>";
             } else {
                 echo error_message("Invalid Username/Email or Password!");
@@ -358,18 +431,20 @@ function loginUser($data)
     }
 }
 
-function loginAdminUser($data)
+function loginAdmin($data)
 {
     extract($data);
-    $result = query("SELECT * FROM `admin` WHERE (username = '$username' OR email = '$username') ");
+    $result = query("SELECT * FROM `admin` WHERE ( ADMIN_ID = '$username' AND ADMIN_PASSWORD = '$password') ");
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_object($result)) {
-            if (password_verify($password, $row->password)) {
-                $_SESSION['user'] = $row;
-                echo "<script>location.reload();</script>";
-            } else {
-                echo error_message("Invalid Username/Email or Password!");
-            }
+            // if (password_verify($password, $row->password)) {
+            $_SESSION['user'] = $row;
+            $_SESSION['user']->access_id = 1;
+
+            echo "<script>location.reload();</script>";
+            // } else {
+            //     echo error_message("Invalid Username/Email or Password!");
+            // }
         }
     } else {
         echo error_message("Invalid Username/Email or Password!");
@@ -391,12 +466,22 @@ function upload_pic($file, $folder, $default = "default.png")
 
 function error_message($message = "Error Something Went Wrong")
 {
-    return '<div class="alert alert-danger" role="alert"> ' . $message . ' </div>';
+    return '<script>alert("' . $message . '")</script> ';
+    // return '<div class="alert alert-danger" role="alert"> ' . $message . ' </div>';
 }
 
-function success_message($message = "Successfull")
+function success_message($message = "Successfull", $redirect = "")
 {
-    return '<div class="alert alert-success" role="alert"> ' . $message . ' </div>';
+    if (!empty($redirect)) {
+        return '<script>
+        alert("' . $message . '"); 
+        window.location.href = "' . $redirect . '";
+        </script> ';
+    } else {
+
+        return '<script>alert("' . $message . '");</script> ';
+    }
+    // return '<div class="alert alert-success" role="alert"> ' . $message . ' </div>';
 }
 
 

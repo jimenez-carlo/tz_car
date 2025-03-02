@@ -1,3 +1,11 @@
+<?php include('../includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['user']->access_id == 3) {
+    } else {
+        header('location:../logout.php');
+    }
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -174,24 +182,9 @@
 
 <body>
     <?php
-    require_once('connection.php');
-    session_start();
-    $email = $_SESSION['email'];
 
-    $sql = "select * from booking where EMAIL='$email' order by BOOK_ID DESC LIMIT 1";
-    $name = mysqli_query($con, $sql);
-    $rows = mysqli_fetch_assoc($name);
-    if ($rows == null) {
-        echo '<script>alert("THERE ARE NO BOOKING DETAILS")</script>';
-        echo '<script> window.location.href = "cardetails.php";</script>';
-    } else {
-        $sql2 = "select * from users where EMAIL='$email'";
-        $name2 = mysqli_query($con, $sql2);
-        $rows2 = mysqli_fetch_assoc($name2);
-        $car_id = $rows['CAR_ID'];
-        $sql3 = "select * from cars where CAR_ID='$car_id'";
-        $name3 = mysqli_query($con, $sql3);
-        $rows3 = mysqli_fetch_assoc($name3);
+    foreach (get_list("select * from booking where EMAIL='" . $_SESSION['user']->EMAIL . "' order by BOOK_ID DESC LIMIT 1") as $key => $rows) {
+        $car = get_one("select * from cars where CAR_ID = " . $rows['CAR_ID']);
     ?>
         <div class="container">
             <div class="header">
@@ -204,16 +197,16 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="title">Rent Status</div>
-                        <button class="back-btn"><a href="cardetails.php">Go Back</a></button>
+                        <button class="back-btn"><a href="index.php">Go Back</a></button>
                     </div>
                     <div class="card-content">
                         <div class="imgBx">
                             <div class="img-wrapper">
-                                <img src="images/<?php echo $rows3['CAR_IMG']; ?>" alt="Car Image">
+                                <img src="../images/<?php echo $car->CAR_IMG ?>" alt="Car Image">
                             </div>
                         </div>
                         <h1>Booking Details</h1>
-                        <h2>Car Name: <?php echo $rows3['CAR_NAME'] ?></h2>
+                        <h2>Car Name: <?php echo $car->CAR_NAME ?></h2>
                         <h2>No of Days: <?php echo $rows['DURATION'] ?></h2>
                         <h2>Booking Status: <?php echo $rows['BOOK_STATUS'] ?></h2>
                     </div>

@@ -1,24 +1,11 @@
+<?php include('../includes/functions.php') ?>
 <?php
-session_start();
-require_once('connection.php');
-
-if (isset($_SESSION['email'])) {
-    $value = $_SESSION['email'];
-    $_SESSION['email'] = $value;
-
-    $sql = "SELECT * FROM users WHERE EMAIL='$value'";
-    $name = mysqli_query($con, $sql);
-    $rows = mysqli_fetch_assoc($name);
-
-    $sql2 = "SELECT * FROM cars WHERE AVAILABLE='Y'";
-    $cars = mysqli_query($con, $sql2);
-} else {
-    // Handle the case where $_SESSION['email'] is not set
-    echo "Email is not set.";
-    exit;
-}
-?>
-
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['user']->access_id == 3) {
+    } else {
+        header('location:../logout.php');
+    }
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -311,14 +298,14 @@ if (isset($_SESSION['email'])) {
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="#">HOME</a></li>
-                        <li><a href="aboutus2.html">ABOUT</a></li>
-                        <li><a href="contactus2.html">CONTACT</a></li>
+                        <li><a href="index.php">HOME</a></li>
+                        <li><a href="aboutus.php">ABOUT</a></li>
+                        <li><a href="contactus.php">CONTACT</a></li>
                         <li><a href="create_feedback.php">FEEDBACK</a></li>
-                        <li><a href="index.php" class="logout-button">LOGOUT</a></li>
-                        <li><img src="images/profile.png" alt="Profile"></li>
+                        <li><a href="../logout.php" class="logout-button">LOGOUT</a></li>
+                        <li><img src="../images/profile.png" alt="Profile"></li>
                         <li>
-                            <p class="phello" style="color: white;">HELLO! &nbsp;<a id="pname"><?php echo $rows['FNAME'] . " " . $rows['LNAME']; ?></a></p>
+                            <p class="phello" style="color: white;">HELLO! &nbsp;<a id="pname"><?= $_SESSION['user']->FNAME . " " . $_SESSION['user']->LNAME ?></a></p>
                         </li>
                         <li><a id="stat" href="bookinstatus.php">RENT STATUS</a></li>
                     </ul>
@@ -328,27 +315,33 @@ if (isset($_SESSION['email'])) {
             <h1 class="overview">OUR CARS OVERVIEW</h1>
 
             <ul class="de">
-                <?php while ($result = mysqli_fetch_array($cars)): ?>
+                <?= (isset($_POST['submit'])) ? createFeedback(array_merge($_POST)) : ''; ?>
+                <?php
+                foreach (
+                    get_list("SELECT c.* FROM cars c WHERE c.CAR_ID NOT IN ( SELECT b.CAR_ID 
+    FROM booking b 
+    WHERE b.EMAIL = '" . $_SESSION['user']->EMAIL . "')") as $result
+                ) {
+                ?>
                     <li>
-                        <form action="booking.php" method="get">
-                            <input type="hidden" name="id" value="<?php echo $result['CAR_ID']; ?>">
-                            <div class="box">
-                                <div class="imgBx">
-                                    <div class="img-wrapper">
-                                        <img src="images/<?php echo $result['CAR_IMG']; ?>" alt="Car Image">
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <h1><?php echo $result['CAR_NAME']; ?></h1>
-                                    <h2>Fuel Type: <a><?php echo $result['FUEL_TYPE']; ?></a></h2>
-                                    <h2>Capacity: <a><?php echo $result['CAPACITY']; ?></a></h2>
-                                    <h2>Rent Per Day: <a>₱<?php echo $result['PRICE']; ?>/-</a></h2>
-                                    <button type="submit" name="booknow" class="utton">Rent</button>
+                        <div class="box">
+                            <div class="imgBx">
+                                <div class="img-wrapper">
+                                    <img src="../images/<?php echo $result['CAR_IMG']; ?>" alt="Car Image">
                                 </div>
                             </div>
-                        </form>
+                            <div class="content">
+                                <h1><?php echo $result['CAR_NAME']; ?></h1>
+                                <h2>Fuel Type: <a><?php echo $result['FUEL_TYPE']; ?></a></h2>
+                                <h2>Capacity: <a><?php echo $result['CAPACITY']; ?></a></h2>
+                                <h2>Rent Per Day: <a>₱<?php echo $result['PRICE']; ?>/-</a></h2>
+                                <a href="book_car.php?car_id=<?= $result['CAR_ID'] ?>" class="utton">
+                                    <button type="button" name="submit" class="utton">Rent</button>
+                                </a>
+                            </div>
+                        </div>
                     </li>
-                <?php endwhile; ?>
+                <?php }  ?>
             </ul>
         </div>
     </div>

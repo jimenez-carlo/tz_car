@@ -1,3 +1,12 @@
+<?php include('includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+  if ($_SESSION['user']->access_id == 1 || $_SESSION['user']->access_id == 2) {
+    header('location:admin');
+  } else if ($_SESSION['user']->access_id == 3) {
+    header('location:client');
+  }
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 

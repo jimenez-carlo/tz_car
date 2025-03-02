@@ -1,8 +1,12 @@
-**Modified Code with Applied Design and Modifications**
+<?php include('../includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['user']->access_id == 1) {
+    } else {
+        header('location:../logout.php');
+    }
+} ?>
 
-Here is the modified code with the applied design and modifications from the original code:
-
-```php
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,20 +49,15 @@ Here is the modified code with the applied design and modifications from the ori
         }
 
         .navbar {
-            width: 100%;
             height: 75px;
-            margin: auto;
             background-color: #333;
             padding: 10px;
             border-radius: 0px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            display: flex;
+            justify-content: space-between;
         }
 
         .icon {
-            width: 200px;
             float: left;
             height: 70px;
         }
@@ -73,7 +72,6 @@ Here is the modified code with the applied design and modifications from the ori
         }
 
         .menu {
-            width: 400px;
             float: left;
             height: 70px;
 
@@ -120,6 +118,7 @@ Here is the modified code with the applied design and modifications from the ori
             color: #333;
             background: linear-gradient(to bottom, #ffffff, #f0f0f0);
             /* Add a gradient background */
+
         }
 
         .content-table thead tr {
@@ -155,7 +154,7 @@ Here is the modified code with the applied design and modifications from the ori
 
 
         .header {
-            margin-top: 0;
+            margin-top: 20px;
             margin-left: 0;
             text-align: center;
         }
@@ -231,16 +230,126 @@ Here is the modified code with the applied design and modifications from the ori
             text-decoration: none;
             color: black;
         }
+
+
+        .main {
+            width: 400px;
+            margin: 100px auto 0px auto;
+            margin-top: 30px;
+        }
+
+        .btnn {
+            width: 240px;
+            height: 40px;
+            background: #ff7200;
+            border: none;
+            margin-top: 30px;
+            margin-left: 40px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #fff;
+            transition: 0.4s ease;
+        }
+
+        .btnn:hover {
+            background: #fff;
+            color: #ff7200;
+        }
+
+        .btnn a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px;
+            font-family: sans-serif;
+
+        }
+
+        .register {
+            background-color: rgba(0, 0, 0, 0.6);
+            width: fit-content;
+            font-size: 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+            color: #fff;
+
+        }
+
+        form#register {
+            margin: 40px;
+            margin-top: 10px;
+
+        }
+
+        label {
+            font-family: sans-serif;
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        input#name {
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            outline: 0;
+            padding: 7px;
+            background-color: #fff;
+            box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+
+        #back {
+            width: 100px;
+            height: 40px;
+            background: #ff7200;
+            border: none;
+            margin-top: 10px;
+            margin-left: 20px;
+            font-size: 18px;
+            border-radius: 25px;
+        }
+
+
+        #back a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+
+        }
+
+        #back a:hover {
+            background: #be5300;
+            color: #ff7200;
+
+        }
+
+        #fam {
+            color: #ff7200;
+            font-family: 'Times New Roman';
+            font-size: 50px;
+            padding-left: 20px;
+            margin-top: -10px;
+            text-align: center;
+            letter-spacing: 2px;
+            display: inline;
+            margin-left: 250px;
+        }
+
+        .reg {
+            width: 100%;
+        }
     </style>
-    <?php
-
-    require_once('connection.php');
-    $query = "select *from users";
-    $queryy = mysqli_query($con, $query);
-    $num = mysqli_num_rows($queryy);
 
 
-    ?>
+    <?= (isset($_POST['submit'])) ? createCarv2(array_merge($_POST, $_FILES)) : ''; ?>
+
+
     <div class="navbar">
         <div class="icon">
             <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
@@ -249,56 +358,63 @@ Here is the modified code with the applied design and modifications from the ori
             <ul>
                 <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
                 <li><a href="adminusers.php">USERS</a></li>
-                <li><a href="admindash.php">FEEDBACKS</a></li>
+                <li><a href="index.php">FEEDBACKS</a></li>
 
                 <li><a href="adminbook.php">RENT REQUEST</a></li>
-                <li> <button class="nn"><a href="index.php">LOGOUT</a></button></li>
+                <li> <button class="nn"><a href="../logout.php">LOGOUT</a></button></li>
             </ul>
         </div>
     </div>
     <div class="hai">
-        <div class="header-container">
-            <h1 class="header">USERS</h1>
 
-        </div>
-        <div class="table-container">
-            <table class="content-table">
-                <thead>
-                    <tr>
-                        <th>NAME</th>
-                        <th>EMAIL</th>
-                        <th>LICENSE NUMBER</th>
-                        <th>PHONE NUMBER</th>
-                        <th>GENDER</th>
-                        <th>DELETE USERS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
+        <div class="register">
+            <h2>Enter details of new car</h2>
+            <form id="register" method="POST" enctype="multipart/form-data">
+                <label>Car Name : </label>
+                <br>
+                <input type="text" name="carname"
+                    id="name" placeholder="Enter Car Name" required>
+                <br><br>
+
+                <label>Fuel Type : </label>
+                <br>
+                <input type="text" name="ftype"
+                    id="name" placeholder="Enter Fuel Type" required>
+                <br><br>
+
+                <label>Capacity : </label>
+                <br>
+                <input type="number" name="capacity" min="1"
+                    id="name" placeholder="Enter Capacity Of Car" required>
+                <br><br>
+
+                <label>Price : </label>
+                <br>
+                <input type="number" name="price" min="1"
+                    id="name" placeholder="Enter Price Of Car for One Day" required>
+                <br><br>
+
+                <label>Car Image : </label>
+                <br>
+                <input type="file" name="image" required>
+                <br><br>
+                <input type="hidden" name="available" value="Y">
+                <input type="submit" class="btnn" value="ADD CAR" name="submit">
 
 
-                    while ($res = mysqli_fetch_array($queryy)) {
 
+                </input>
 
-                    ?>
-                        <tr class="active-row">
-                            <td><?php echo $res['FNAME'] . "  " . $res['LNAME']; ?></php>
-                            </td>
-                            <td><?php echo $res['EMAIL']; ?></php>
-                            </td>
-                            <td><?php echo $res['LIC_NUM']; ?></php>
-                            </td>
-                            <td><?php echo $res['PHONE_NUMBER']; ?></php>
-                            </td>
-                            <td><?php echo $res['GENDER']; ?></php>
-                            </td>
-                            <td><button type="submit" class="but" name="approve"><a href="deleteuser.php?id=<?php echo $res['EMAIL'] ?>">DELETE USER</a></button></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+            </form>
         </div>
     </div>
+</body>
+
+</html>
+
+
+
+
 </body>
 
 </html>
