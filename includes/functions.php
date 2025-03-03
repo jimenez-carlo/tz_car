@@ -346,16 +346,18 @@ BOOK_SS) values(
 '$book_place',
 '$book_date',
 '$phone_no',
-'$destination',
 '$duration',
+'$destination',
 '$return_date',
 '$price',
 '$book_status',
 '$img'
 )");
 
+    query("update cars set AVAILABLE = 'N' where CAR_ID = '$car_id'");
+
     unset($_POST, $_FILES);
-    return success_message("Book Created Successfully!", "index.php");
+    return success_message("Book Created Successfully!", "/index.php");
 }
 
 function createBookHistory($booking_id, $booking_status_id)

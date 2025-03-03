@@ -20,55 +20,24 @@ if (isset($_SESSION['user'])) {
 
   <?php
 
-  require_once('connection.php');
   if (isset($_POST['regs'])) {
-    $fname = mysqli_real_escape_string($con, $_POST['fname']);
-    $lname = mysqli_real_escape_string($con, $_POST['lname']);
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $lic = mysqli_real_escape_string($con, $_POST['lic']);
-    $ph = mysqli_real_escape_string($con, $_POST['ph']);
+    extract($_POST);
 
-    $pass = mysqli_real_escape_string($con, $_POST['pass']);
-    $cpass = mysqli_real_escape_string($con, $_POST['cpass']);
-    $gender = mysqli_real_escape_string($con, $_POST['gender']);
-    $Pass = md5($pass);
+    $Pass = password_hash($pass, PASSWORD_BCRYPT);
+
     if (empty($fname) || empty($lname) || empty($email) || empty($lic) || empty($ph) || empty($pass) || empty($gender)) {
       echo '<script>alert("please fill the place")</script>';
     } else {
       if ($pass == $cpass) {
         $sql2 = "SELECT *from users where EMAIL='$email'";
-        $res = mysqli_query($con, $sql2);
-        if (mysqli_num_rows($res) > 0) {
+        if (has_result("SELECT *from users where EMAIL='$email'")) {
           echo '<script>alert("EMAIL ALREADY EXISTS PRESS OK FOR LOGIN!!")</script>';
           echo '<script> window.location.href = "index.php";</script>';
         } else {
-          $sql = "insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender')";
-          $result = mysqli_query($con, $sql);
+          query("insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender')");
 
-
-          // $to_email = $email;
-          // $subject = "NO-REPLY";
-          // $body = "THIS MAIL CONTAINS YOUR AUTHENTICATION DETAILS....\nYour Password is $pass and Your Registered email is $to_email"
-          //          ;
-          // $headers = "From: sender email";
-
-          // if (mail($to_email, $subject, $body, $headers))
-
-          // {
-          //     echo "Email successfully sent to $to_email...";
-          // }
-
-          // else
-
-          // {
-          // echo "Email sending failed!";
-          // }
-          if ($result) {
-            echo '<script>alert("Registration Successful Press ok to login")</script>';
-            echo '<script> window.location.href = "index.php";</script>';
-          } else {
-            echo '<script>alert("please check the connection")</script>';
-          }
+          echo '<script>alert("Registration Successful Press ok to login")</script>';
+          echo '<script> window.location.href = "index.php";</script>';
         }
       } else {
         echo '<script>alert("PASSWORD DID NOT MATCH")</script>';
@@ -181,7 +150,7 @@ if (isset($_SESSION['user'])) {
     <h1 id="fam">Join TZ CAR RENTAL (URDANETA)</h1>
     <div style="margin-bottom: 20px;"></div>
     <div class="register">
-      <form id="register" action="register.php" method="POST">
+      <form id="register"  method="POST">
         <h2>Register Here</h2>
         <label>First Name : </label>
         <br>

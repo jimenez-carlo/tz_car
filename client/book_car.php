@@ -133,9 +133,6 @@ if (isset($_SESSION['user'])) {
       left: 0;
     }
   </style>
-</head>
-
-<body>
   <style>
     * {
       margin: 0;
@@ -484,6 +481,98 @@ if (isset($_SESSION['user'])) {
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
   </style>
+  <style>
+    .book-car-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .book-car-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .book-car-container fieldset {
+      margin-bottom: 20px;
+      border: none;
+      padding: 0;
+    }
+
+    .book-car-container legend {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .book-car-container table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .book-car-container th,
+    .book-car-container td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .book-car-container th {
+      background-color: #f0f0f0;
+    }
+
+    .book-car-container input[type="text"],
+    .book-car-container input[type="date"],
+    .book-car-container input[type="number"],
+    .book-car-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .book-car-container input[type="text"]:disabled,
+    .book-car-container input[type="date"]:disabled,
+    .book-car-container input[type="number"]:disabled,
+    .book-car-container textarea:disabled {
+      background-color: #f9f9f9;
+      cursor: not-allowed;
+    }
+
+    .book-car-container input[type="file"] {
+      margin-bottom: 20px;
+    }
+
+    .book-car-container .btnn {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .book-car-container .btnn:hover {
+      background-color: #3e8e41;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .col-md-6 {
+      width: 50%;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
 
 
   <?= (isset($_POST['submit'])) ? createBook(array_merge($_POST, $_FILES)) : ''; ?>
@@ -511,131 +600,145 @@ if (isset($_SESSION['user'])) {
   <div class="hai">
 
     <?php $car = get_one("select * from cars where CAR_ID = " . $_GET['car_id']) ?>
-    <div class="register">
+    <div class="book-car-container">
       <h2>Book a Car</h2>
       <form id="register" method="POST" enctype="multipart/form-data">
-        <table>
-          <tr>
-            <td colspan="2">
-              <img src="../images/<?= $car->CAR_IMG ?>" alt="" style="width:310px;height:150px">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>Car Name : </label>
-            </td>
-            <td>
-              <input type="text" value="<?= $car->CAR_NAME ?>" disabled><br>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>FUEL TYPE : </label>
-            </td>
-            <td>
-              <input type="text" value="<?= $car->FUEL_TYPE ?>" disabled><br>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>CAPACITY : </label>
-            </td>
-            <td>
-              <input type="text" value="<?= $car->CAPACITY ?>" disabled><br>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>PRICE : </label>
-            </td>
-            <td>
-              <input type="text" value="<?= $car->PRICE ?>" disabled id="price"><br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <label>BOOK DATE : </label>
-            </td>
-            <td>
-              <input type="date" name="book_date" required><br>
-            </td>
-          </tr>
-          <td>
-            <label>RETURN DATE : </label>
-          </td>
-          <td>
-            <input type="date" name="return_date" required><br>
-          </td>
-          </tr>
-
-          <tr>
-            <td>
-              <label>TOTAL : </label>
-            </td>
-            <td>
-              <input type="text" disabled id="total"><br>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>DURATION : </label>
-            </td>
-            <td>
-              <input type="number" name="duration" required id="duration"><br>
-            </td>
-          </tr>
-          <tr>
-          <tr>
-            <td>
-              <label>PHONE NO : </label>
-            </td>
-            <td>
-              <input type="number" name="phone_no" required><br>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>BOOK PLACE: </label>
-            </td>
-            <td>
-              <textarea name="book_place" rows="5" required></textarea><br>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>DESTINATION: </label>
-            </td>
-            <td>
-              <textarea name="destination" rows="5" required></textarea><br>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <img src="../images/gcash.jpg" alt="" style="width:310px;height:450px">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label>SCREEN SHOT: </label>
-            </td>
-            <td>
-              <input type="file" name="image" required>
-            </td>
-          </tr>
-
-        </table>
-
+        <div class="row">
+          <div class="col-md-6">
+            <fieldset>
+              <legend>Car Details</legend>
+              <table>
+                <tr>
+                  <td colspan="2">
+                    <img src="../images/<?= $car->CAR_IMG ?>" alt="" style="width:310px;height:150px">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Car Name:</label>
+                  </td>
+                  <td>
+                    <input type="text" value="<?= $car->CAR_NAME ?>" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Fuel Type:</label>
+                  </td>
+                  <td>
+                    <input type="text" value="<?= $car->FUEL_TYPE ?>" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Capacity:</label>
+                  </td>
+                  <td>
+                    <input type="text" value="<?= $car->CAPACITY ?>" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Price:</label>
+                  </td>
+                  <td>
+                    <input type="text" value="<?= $car->PRICE ?>" disabled id="price">
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </div>
+          <div class="col-md-6">
+            <fieldset>
+              <legend>Booking Details</legend>
+              <table>
+                <tr>
+                  <td>
+                    <label>Book Date:</label>
+                  </td>
+                  <td>
+                    <input type="date" name="book_date" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Return Date:</label>
+                  </td>
+                  <td>
+                    <input type="date" name="return_date" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Total:</label>
+                  </td>
+                  <td>
+                    <input type="text" disabled id="total">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Duration:</label>
+                  </td>
+                  <td>
+                    <input type="number" name="duration" required id="duration">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Phone No:</label>
+                  </td>
+                  <td>
+                    <input type="number" name="phone_no" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Book Place:</label>
+                  </td>
+                  <td>
+                    <textarea name="book_place" rows="5" required></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Destination:</label>
+                  </td>
+                  <td>
+                    <textarea name="destination" rows="5" required></textarea>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <fieldset>
+              <legend>Payment Details</legend>
+              <table>
+                <tr>
+                  <td colspan="2">
+                    <img src="../images/gcash.jpg" alt="" style="width:310px;height:450px">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Screenshot:</label>
+                  </td>
+                  <td>
+                    <input type="file" name="image" required>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </div>
+        </div>
         <input type="hidden" name="email" value="<?= $_SESSION['user']->EMAIL ?>">
         <input type="hidden" name="car_id" value="<?= $car->CAR_ID ?>">
-        <input type="hidden" name="price" value="<?= $car->CAR_PRICE ?>">
-        <input type="hidden" name="book_status" value="PENDING">
+        <input type="hidden" name="price" value="<?= $car->PRICE ?>">
+        <input type="hidden" name="book_status" value="UNDER PROCESSING">
         <input type="submit" class="btnn" value="BOOK" name="submit">
-
-
-
-        </input>
-
       </form>
     </div>
   </div>
@@ -647,13 +750,6 @@ if (isset($_SESSION['user'])) {
       total.value = price * duration;
     });
   </script>
-</body>
-
-</html>
-
-
-
-
 </body>
 
 </html>

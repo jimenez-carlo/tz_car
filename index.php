@@ -22,11 +22,11 @@ if (isset($_SESSION['user'])) {
   <div class="hai">
     <div class="navbar">
       <div class="icon">
-        <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
+        <h2 class="logo">TZ CAR RENTAL</h2>
       </div>
       <div class="menu">
         <ul>
-          <li><a href="#">HOME</a></li>
+          <li><a href="index.php">HOME</a></li>
           <li><a href="aboutus.php">ABOUT</a></li>
           <li><a href="contactus.php">CONTACT</a></li>
           <li><button class="adminbtn"><a href="adminlogin.php">ADMIN</a></button></li>

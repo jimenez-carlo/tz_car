@@ -183,7 +183,7 @@ if (isset($_SESSION['user'])) {
 <body>
     <?php
 
-    foreach (get_list("select * from booking where EMAIL='" . $_SESSION['user']->EMAIL . "' order by BOOK_ID DESC LIMIT 1") as $key => $rows) {
+    foreach (get_list("select * from booking where EMAIL='" . $_SESSION['user']->EMAIL . "' order by BOOK_ID ") as $key => $rows) {
         $car = get_one("select * from cars where CAR_ID = " . $rows['CAR_ID']);
     ?>
         <div class="container">
