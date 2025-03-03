@@ -371,9 +371,12 @@ function cancelBook($booking_id)
     return success_message("Book Cancelled Successfully!");
 }
 
-function changeBookStatus($id, $book_status)
+function changeBookStatus($id, $book_status, $car_id = null)
 {
     query("UPDATE booking set BOOK_STATUS = '$book_status' where BOOK_ID = $id");
+    if (!empty($car_id)) {
+        query("update cars AVAILABLE = 'Y' where CAR_ID = " . $car_id);
+    }
     // query("INSERT INTO `tbl_booking_status_history` (booking_status_id, booking_id) values(3, '$booking_id')");
     return success_message("Book Changed Status Successfully!");
 }
