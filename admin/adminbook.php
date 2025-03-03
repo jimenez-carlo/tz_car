@@ -546,7 +546,7 @@ if (isset($_SESSION['user'])) {
                 </thead>
                 <tbody>
                     <?= (isset($_POST['confirm'])) ? changeBookStatus($_POST['id'], "CONFIRMED") : ''; ?>
-                    <?= (isset($_POST['complete'])) ? (changeBookStatus($_POST['id'], "COMPLETED", $car_id)) : ''; ?>
+                    <?= (isset($_POST['complete'])) ? (changeBookStatus($_POST['id'], "COMPLETED", $_POST['car_id'])) : ''; ?>
                     <?= (isset($_POST['reject'])) ? changeBookStatus($_POST['id'], "REJECTED") : ''; ?>
                     <?php
 
