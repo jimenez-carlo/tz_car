@@ -205,6 +205,11 @@ if (isset($_SESSION['user'])) {
             color: #fff;
             transform: scale(1.1);
         }
+
+        .form {
+            margin: auto;
+            width: unset;
+        }
     </style>
 </head>
 
@@ -225,24 +230,16 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
         <div class="content">
-            <div>
-                <h1>Rent your Car <br><span>at TZ Car Rental (URDANETA)</span></h1>
-                <p class="par">Here at TZ Car Rental (URDANETA)<br>
-                    Urdaneta, Pangasinan<br>Enjoy every moment with your family<br>
-                    We offer a wide range of cars for rent and fast response!</p>
-                <button class="cn"><a href="register.php">JOIN US</a></button>
-            </div>
+
             <div class="form">
-                <h2>Login Here</h2>
+                <h2>Forgot Password</h2>
                 <form method="POST">
                     <input type="email" name="username" placeholder="Enter Email Here">
-                    <input type="password" name="password" placeholder="Enter Password Here">
-                    <input class="btnn" type="submit" value="Login" name="submit">
+                    <input class="btnn" type="submit" value="Submit" name="submit">
                 </form>
-                <p class="link">Don't have an account?<br>
-                    <a href="register.php">Sign up</a> here
+                <p class="link">Already have an account?<br>
+                    <a href="index.php">login</a> here.
                 </p>
-                <p class="link"><a href="forgot.php">Forgot password</a> </p>
             </div>
         </div>
     </div>

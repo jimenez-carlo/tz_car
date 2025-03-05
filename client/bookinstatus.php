@@ -23,10 +23,13 @@ if (isset($_SESSION['user'])) {
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-image: url(images/carbg2.jpg);
-
-        }
+      background-image: url("../images/carbg2.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+    }
 
         .container {
             width: 100%;

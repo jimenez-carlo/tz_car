@@ -171,8 +171,8 @@ if (isset($_SESSION['user'])) {
         </div>
         <form class="form" method="POST">
             <h2>Admin Login</h2>
-            <input class="h" type="text" name="username" placeholder="Enter admin user id">
-            <input class="h" type="password" name="password" placeholder="Enter admin password">
+            <input class="h" type="text" name="username" placeholder="Enter Admin User Id">
+            <input class="h" type="password" name="password" placeholder="Enter Admin Password">
             <input type="submit" class="btnn" value="LOGIN" name="submit">
         </form>
     </center>

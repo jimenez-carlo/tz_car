@@ -228,6 +228,26 @@ if (isset($_SESSION['user'])) {
             text-decoration: none;
             color: black;
         }
+
+        #confirm-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        #confirm-dialog .dialog-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
     </style>
 
     <div class="navbar">
@@ -263,28 +283,17 @@ if (isset($_SESSION['user'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?= (isset($_POST['delete'])) ? deleteItem("users", "EMAIL", $_POST['EMAIL']) : ''; ?>
                     <?php
-
-
                     foreach (get_list("select *from users") as $key => $res) {
                     ?>
                         <tr class="active-row">
-                            <td><?php echo $res['FNAME'] . "  " . $res['LNAME']; ?></php>
-                            </td>
-                            <td><?php echo $res['EMAIL']; ?></php>
-                            </td>
-                            <td><?php echo $res['LIC_NUM']; ?></php>
-                            </td>
-                            <td><?php echo $res['PHONE_NUMBER']; ?></php>
-                            </td>
-                            <td><?php echo $res['GENDER']; ?></php>
-                            </td>
+                            <td><?php echo $res['FNAME'] . "  " . $res['LNAME']; ?></td>
+                            <td><?php echo $res['EMAIL']; ?></td>
+                            <td><?php echo $res['LIC_NUM']; ?></td>
+                            <td><?php echo $res['PHONE_NUMBER']; ?></td>
+                            <td><?php echo $res['GENDER']; ?></td>
                             <td>
-                                <form method="post">
-                                    <input type="hidden" name="EMAIL" value="<?= $res['EMAIL'] ?>">
-                                    <button type="submit" name="delete" class="but">DELETE USER</button>
-                                </form>
+                                <button class="but" onclick="confirmDelete('<?= $res['EMAIL'] ?>')">DELETE USER</button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -292,6 +301,47 @@ if (isset($_SESSION['user'])) {
             </table>
         </div>
     </div>
+
+    <!-- Confirmation Dialog HTML -->
+    <div id="confirm-dialog">
+        <div class="dialog-content">
+            <h2>Are you sure?</h2>
+            <p>Do you want to delete this user?</p>
+            <button id="confirm-delete" class="but">Yes</button>
+            <button id="cancel-delete" class="but">No</button>
+        </div>
+    </div>
+
+    <script>
+        // Confirmation Dialog JavaScript
+        function confirmDelete(email) {
+            document.getElementById("confirm-dialog").style.display = "block";
+            document.getElementById("confirm-delete").addEventListener("click", function() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "delete.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send("table=users&column=EMAIL&value=" + email);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        if (xhr.responseText === "User Deleted Successfully") {
+                            location.reload();
+                        } else {
+                            alert(xhr.responseText);
+                        }
+                    } else {
+                        alert("Error deleting user: " + xhr.statusText);
+                    }
+                };
+                xhr.onerror = function() {
+                    alert("Error deleting user: " + xhr.statusText);
+                };
+                document.getElementById("confirm-dialog").style.display = "none";
+            });
+            document.getElementById("cancel-delete").addEventListener("click", function() {
+                document.getElementById("confirm-dialog").style.display = "none";
+            });
+        }
+    </script>
 </body>
 
 </html>

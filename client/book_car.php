@@ -20,7 +20,7 @@ if (isset($_SESSION['user'])) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     body {
-      background-image: url('images/meshbg.jpg');
+      background-image: url("../images/carbg2.jpg");
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: cover;
@@ -575,7 +575,15 @@ if (isset($_SESSION['user'])) {
 
 
 
-  <?= (isset($_POST['submit'])) ? createBook(array_merge($_POST, $_FILES)) : ''; ?>
+  <?php if (isset($_POST['submit'])) {
+    $result = createBook(array_merge($_POST, $_FILES));
+    if ($result) {
+      echo "<script>alert('Booked Successfully!');</script>";
+      echo "<script>window.location.href='index.php';</script>";
+    } else {
+      echo "<script>alert('Failed to book!');</script>";
+    }
+  } ?>
 
 
   <div class="navbar">
@@ -589,7 +597,11 @@ if (isset($_SESSION['user'])) {
         <li><a href="contactus.php">CONTACT</a></li>
         <li><a href="create_feedback.php">FEEDBACK</a></li>
         <li><a href="../logout.php" class="logout-button">LOGOUT</a></li>
-        <li><img src="../images/profile.png" alt="Profile" width="30" height="30" style="border-radius: 50%;"></li>
+        <li>
+          <a href="profile.php">
+            <img src="../images/profile.png" alt="Profile" width="30" height="30" style="border-radius: 50%;">
+          </a>
+        </li>
         <li>
           <p class="phello" style="color: white;">HELLO! &nbsp;<a id="pname"><?= $_SESSION['user']->FNAME . " " . $_SESSION['user']->LNAME ?></a></p>
         </li>
@@ -599,9 +611,12 @@ if (isset($_SESSION['user'])) {
   </div>
   <div class="hai">
 
-    <?php $car = get_one("select * from cars where CAR_ID = " . $_GET['car_id']) ?>
+    <?php
+    $car_id = $_GET['car_id'];
+    $car = get_one("select * from cars where CAR_ID = '$car_id'");
+    ?>
     <div class="book-car-container">
-      <h2>Book a Car</h2>
+      <h2>Transaction Detail</h2>
       <form id="register" method="POST" enctype="multipart/form-data">
         <div class="row">
           <div class="col-md-6">
@@ -657,7 +672,7 @@ if (isset($_SESSION['user'])) {
                     <label>Book Date:</label>
                   </td>
                   <td>
-                    <input type="date" name="book_date" required>
+                    <input type="date" name="book_date" required id="book_date">
                   </td>
                 </tr>
                 <tr>
@@ -665,7 +680,7 @@ if (isset($_SESSION['user'])) {
                     <label>Return Date:</label>
                   </td>
                   <td>
-                    <input type="date" name="return_date" required>
+                    <input type="date" name="return_date" required id="return_date">
                   </td>
                 </tr>
                 <tr>
@@ -674,14 +689,6 @@ if (isset($_SESSION['user'])) {
                   </td>
                   <td>
                     <input type="text" disabled id="total">
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label>Duration:</label>
-                  </td>
-                  <td>
-                    <input type="number" name="duration" required id="duration">
                   </td>
                 </tr>
                 <tr>
@@ -718,8 +725,30 @@ if (isset($_SESSION['user'])) {
               <legend>Payment Details</legend>
               <table>
                 <tr>
+                  <td>
+                    <label>Payment Method:</label>
+                  </td>
+                  <td>
+                    <select id="payment-method" name="payment_method">
+                      <option value="Gcash">Gcash</option>
+                      <option value="Paymaya">Paymaya</option>
+                      <option value="Cash on Delivery">Cash on Delivery</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr id="gcash-image-row">
                   <td colspan="2">
-                    <img src="../images/gcash.jpg" alt="" style="width:310px;height:450px">
+                    <img src="../images/gcash.jpg" alt="" style="width:310px;height:450px" id="gcash-image" onclick="openImage('gcash-image')">
+                  </td>
+                </tr>
+                <tr id="paymaya-image-row" style="display: none;">
+                  <td colspan="2">
+                    <img src="../images/paymaya.jpg" alt="" style="width:310px;height:450px" id="paymaya-image" onclick="openImage('paymaya-image')">
+                  </td>
+                </tr>
+                <tr id="cod-image-row" style="display: none;">
+                  <td colspan="2">
+                    <img src="../images/cod.jpg" alt="" style="width:310px;height:450px" id="cod-image" onclick="openImage('cod-image')">
                   </td>
                 </tr>
                 <tr>
@@ -737,18 +766,107 @@ if (isset($_SESSION['user'])) {
         <input type="hidden" name="email" value="<?= $_SESSION['user']->EMAIL ?>">
         <input type="hidden" name="car_id" value="<?= $car->CAR_ID ?>">
         <input type="hidden" name="price" value="<?= $car->PRICE ?>">
-        <input type="hidden" name="book_status" value="UNDER PROCESSING">
+        <input type="hidden" name=" book_status" value="UNDER PROCESSING">
         <input type="submit" class="btnn" value="BOOK" name="submit">
       </form>
     </div>
   </div>
   <script>
-    document.getElementById("duration").addEventListener("input", function() {
-      let total = document.getElementById("total");
+    document.getElementById("book_date").addEventListener("input", function() {
+      let bookDate = document.getElementById("book_date").value;
+      let returnDate = document.getElementById("return_date").value;
       let price = document.getElementById("price").value;
-      let duration = document.getElementById("duration").value;
-      total.value = price * duration;
+      let total = document.getElementById("total");
+
+      if (bookDate && returnDate) {
+        let date1 = new Date(bookDate);
+        let date2 = new Date(returnDate);
+        let timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        total.value = price * diffDays;
+      }
     });
+
+    document.getElementById("return_date").addEventListener("input", function() {
+      let bookDate = document.getElementById("book_date").value;
+      let returnDate = document.getElementById("return_date").value;
+      let price = document.getElementById("price").value;
+      let total = document.getElementById("total");
+
+      if (bookDate && returnDate) {
+        let date1 = new Date(bookDate);
+        let date2 = new Date(returnDate);
+        let timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        total.value = price * diffDays;
+      }
+    });
+  </script>
+  <script>
+    document.getElementById("payment-method").addEventListener("change", function() {
+      let paymentMethod = document.getElementById("payment-method").value;
+      let gcashImageRow = document.getElementById("gcash-image-row");
+      let paymayaImageRow = document.getElementById("paymaya-image-row");
+      let codImageRow = document.getElementById("cod-image-row");
+
+      if (paymentMethod === "Gcash") {
+        gcashImageRow.style.display = "table-row";
+        paymayaImageRow.style.display = "none";
+        codImageRow.style.display = "none";
+      } else if (paymentMethod === "Paymaya") {
+        gcashImageRow.style.display = "none";
+        paymayaImageRow.style.display = "table-row";
+        codImageRow.style.display = "none";
+      } else if (paymentMethod === "Cash on Delivery") {
+        gcashImageRow.style.display = "none";
+        paymayaImageRow.style.display = "none";
+        codImageRow.style.display = "table-row";
+      }
+    });
+  </script>
+  <script>
+    function openImage(imageId) {
+      var image = document.getElementById(imageId);
+      var imageUrl = image.src;
+      var imageModal = document.createElement('div');
+      imageModal.style.position = 'fixed';
+      imageModal.style.top = '0';
+      imageModal.style.left = '0';
+      imageModal.style.width = '100%';
+      imageModal.style.height = '100%';
+      imageModal.style.background = 'rgba(0, 0, 0, 0.5)';
+      imageModal.style.display = 'flex';
+      imageModal.style.justifyContent = 'center';
+      imageModal.style.alignItems = 'center';
+      imageModal.style.zIndex = '1000';
+
+      var closeButton = document.createElement('span');
+      closeButton.style.position = 'absolute';
+      closeButton.style.top = '10px';
+      closeButton.style.right = '10px';
+      closeButton.style.fontSize = '36px';
+      closeButton.style.cursor = 'pointer';
+      closeButton.innerHTML = '&times;';
+      closeButton.onclick = function() {
+        imageModal.remove();
+      };
+
+      var imageElement = document.createElement('img');
+      imageElement.src = imageUrl;
+      imageElement.style.maxWidth = '80%';
+      imageElement.style.maxHeight = '80%';
+
+      imageModal.appendChild(closeButton);
+      imageModal.appendChild(imageElement);
+      document.body.appendChild(imageModal);
+
+      // Add event listener to close the modal when clicked outside the image
+      imageModal.addEventListener('click', function(event) {
+        if (event.target !== imageElement && event.target !== closeButton) {
+          imageModal.remove();
+        }
+      });
+    }
   </script>
 </body>
 

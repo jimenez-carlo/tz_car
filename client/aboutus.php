@@ -31,7 +31,7 @@ if (isset($_SESSION['user'])) {
         body {
             font-family: 'Playfair Display', serif;
             display: grid;
-            background-image: url('images/meshbg.jpg');
+            background-image: url("../images/carbg2.jpg");
             background-size: cover;
             background-position: center;
             align-content: center;
@@ -243,9 +243,9 @@ if (isset($_SESSION['user'])) {
             <span><!-- line here --></span>
             <p>We are pleased you chose TZ CAR RENTAL (URDANETA) Urdaneta to rent a car, We have lots of cars to choose from and we are happy to serve you always anytime anywhere!</p>
             <ul class="links">
-                <li><a href="#">service</a></li>
-                <div class="vertical-line"></div>
-                <li><a href="contact.php">contact</a></li>
+        
+    
+                <li><a href="contactus.php">contact</a></li>
             </ul>
             <ul class="icons">
                 <li>

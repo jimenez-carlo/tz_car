@@ -459,11 +459,18 @@ if (isset($_SESSION['user'])) {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
+
+  .form-input {
+    width: 100% !important;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+  }
 </style>
 
 
-<?= (isset($_POST['submit'])) ? createFeedback(array_merge($_POST)) : ''; ?>
-
+<?= (isset($_POST['submit'])) ? updateUser($_POST) : ''; ?>
+<?php $data = get_one("select * from users where EMAIL = '" . $_SESSION['user']->EMAIL . "'") ?>
 
 <div class="navbar">
   <div class="icon">
@@ -489,27 +496,45 @@ if (isset($_SESSION['user'])) {
   </div>
 </div>
 <div class="register" style="width: 80%; margin: 40px auto;">
-  <h2>Create Feedback</h2>
+  <h2>Profile</h2>
   <form id="register" method="POST">
-    <label>Rating : </label>
+    <label>Firstname : </label>
     <br>
-    <select name="rating" style="width: 100%; padding: 10px; font-size: 18px; border: 1px solid #ddd;">
-      <option value="1">1 - Poor</option>
-      <option value="2">2 - Fair</option>
-      <option value="3">3 - Good</option>
-      <option value="4">4 - Very Good</option>
-      <option value="5">5 - Excellent</option>
-    </select>
+    <input type="text" name="fname" id="name" placeholder="Enter Your First Name" required="" class="form-input" value="<?= $data->FNAME ?>">
     <br><br>
-    <label>Comment : </label>
+    <label>Last : </label>
     <br>
-    <textarea name="comment" id="" rows="10" style="width: 100%; padding: 10px; font-size: 18px; border: 1px solid #ddd;" placeholder="Enter Feedback here"></textarea>
+    <input type="text" name="lname" id="name" placeholder="Enter Your Last Name" required="" class="form-input" value="<?= $data->LNAME ?>">
     <br><br>
-    <label>Suggestions for Improvement : </label>
+    <label>Email : </label>
     <br>
-    <textarea name="suggestions" id="" rows="5" style="width: 100%; padding: 10px; font-size: 18px; border: 1px solid #ddd;" placeholder="Enter Suggestions here"></textarea>
+    <input type="email" name="email" id="name" placeholder="Enter Your Email" required="" class="form-input" value="<?= $data->EMAIL ?>">
     <br><br>
-    <input type="submit" class="btnn" value="Submit Feedback" name="submit">
+    <label>License Number : </label>
+    <br>
+    <input type="text" name="lic" id="name" placeholder="Enter Your Licensed Number" required="" class="form-input" value="<?= $data->LIC_NUM ?>">
+    <br><br>
+    <label>Phone Number : </label>
+    <br>
+    <input type="tel" name="ph" id="name" required="" class="form-input" value="<?= $data->PHONE_NUMBER ?>" maxlength="10" onkeypress="return onlyNumberKey(event)" id="name" placeholder="Enter Your Phone Number">
+    <br><br>
+    <label>Password : </label>
+    <br>
+    <input type="password" name="pass" maxlength="12" id="psw" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required="" class="form-input">
+    <br><br>
+    <label>Gender : </label>
+    <br>
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="one">Male</label>
+    <input type="radio" id="input_enabled" name="gender" value="male" style="width:200px" required <?= $data->GENDER == 'male' ? "checked" : "" ?>>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label for="two">Female</label>
+    <input type="radio" id="input_disabled" name="gender" value="female" style="width:160px" required <?= $data->GENDER == 'female' ? "checked" : "" ?>>
+
+    <br><br>
+    <input type="submit" class="btnn" value="Update" name="submit">
   </form>
 </div>
 </body>

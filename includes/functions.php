@@ -89,25 +89,29 @@ function createUser($data)
 function updateUser($data)
 {
     extract($data);
-    if (has_result("select * from tbl_users where email = '$email' and user_id <> $id")) {
-        return error_message("Email already in-use");
-    }
 
-    if (has_result("select * from tbl_users where username = '$username' and user_id <> $id")) {
-        return error_message("Username already in-use");
-    }
-    $password = password_hash($password, PASSWORD_BCRYPT);
-    query("UPDATE `tbl_users` set 
-       `access_id` = '$access_id',
-       `gender_id` =  '$gender_id', 
-       `email` =  '$email', 
-       `username` =  '$username', 
-       `password` =  '$password', 
-       `first_name` =  '$first_name', 
-       `last_name` =  '$last_name', 
-       `phone_no`= $phone_no
-       where `user_id` = '$id'
+    $password = password_hash($pass, PASSWORD_BCRYPT);
+    query("UPDATE `users` set 
+       `FNAME` = '$fname',
+       `LNAME` =  '$lname', 
+       `EMAIL` =  '$email', 
+       `LIC_NUM` =  '$lic', 
+       `PHONE_NUMBER` =  '$ph', 
+       `PASSWORD` =  '$password', 
+       `GENDER` =  '$gender'
+       where `EMAIL` = '$email'
        ");
+    // query("UPDATE `tbl_users` set 
+    //    `access_id` = '$access_id',
+    //    `gender_id` =  '$gender_id', 
+    //    `email` =  '$email', 
+    //    `username` =  '$username', 
+    //    `password` =  '$password', 
+    //    `first_name` =  '$first_name', 
+    //    `last_name` =  '$last_name', 
+    //    `phone_no`= $phone_no
+    //    where `user_id` = '$id'
+    //    ");
     unset($_POST);
     return success_message("User Updated Successfully!");
 }
@@ -366,7 +370,7 @@ function createBookHistory($booking_id, $booking_status_id)
 }
 function cancelBook($booking_id)
 {
-    query("UPDATE tbl_booking set book_status_id = '$book_status_id' where booking_id = $booking_id");
+    query("UPDATE tbl_booking set book_status_id = '$booking_id' where booking_id = $booking_id");
     query("INSERT INTO `tbl_booking_status_history` (booking_status_id, booking_id) values(3, '$booking_id')");
     return success_message("Book Cancelled Successfully!");
 }
@@ -380,6 +384,7 @@ function changeBookStatus($id, $book_status, $car_id = null)
     // query("INSERT INTO `tbl_booking_status_history` (booking_status_id, booking_id) values(3, '$booking_id')");
     return success_message("Book Changed Status Successfully!");
 }
+
 // function createBookAdmin($data)
 // {
 //     extract($data);

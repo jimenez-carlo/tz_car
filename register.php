@@ -1,12 +1,3 @@
-<?php include('includes/functions.php') ?>
-<?php
-if (isset($_SESSION['user'])) {
-  if ($_SESSION['user']->access_id == 1 || $_SESSION['user']->access_id == 2) {
-    header('location:admin');
-  } else if ($_SESSION['user']->access_id == 3) {
-    header('location:client');
-  }
-} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,43 +5,6 @@ if (isset($_SESSION['user'])) {
 
   <title>REGISTRATION</title>
   <link rel="stylesheet" href="css/regs.css" type="text/css">
-</head>
-
-<body>
-
-  <?php
-
-  if (isset($_POST['regs'])) {
-    extract($_POST);
-
-    $Pass = password_hash($pass, PASSWORD_BCRYPT);
-
-    if (empty($fname) || empty($lname) || empty($email) || empty($lic) || empty($ph) || empty($pass) || empty($gender)) {
-      echo '<script>alert("please fill the place")</script>';
-    } else {
-      if ($pass == $cpass) {
-        $sql2 = "SELECT *from users where EMAIL='$email'";
-        if (has_result("SELECT *from users where EMAIL='$email'")) {
-          echo '<script>alert("EMAIL ALREADY EXISTS PRESS OK FOR LOGIN!!")</script>';
-          echo '<script> window.location.href = "index.php";</script>';
-        } else {
-          query("insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender')");
-
-          echo '<script>alert("Registration Successful Press ok to login")</script>';
-          echo '<script> window.location.href = "index.php";</script>';
-        }
-      } else {
-        echo '<script>alert("PASSWORD DID NOT MATCH")</script>';
-        echo '<script> window.location.href = "register.php";</script>';
-      }
-    }
-  }
-
-
-  ?>
-
-
-
   <style>
     body {
       background-image: url('images/carbg2.jpg');
@@ -80,77 +34,150 @@ if (isset($_SESSION['user'])) {
     }
 
     #message {
-      display: none;
-      background: #f1f1f1;
-      color: #000;
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 1px solid #ddd;
       padding: 20px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      display: none;
+    }
 
-      width: 400px;
-      margin-left: 1000px;
-      margin-top: -500px;
+    #message h3 {
+      margin-top: 0;
     }
 
     #message p {
-      padding: 10px 35px;
-      font-size: 18px;
+      margin-bottom: 10px;
     }
 
-    /* Add a green text color and a checkmark when the requirements are right */
     .valid {
       color: green;
     }
 
     .valid:before {
-      position: relative;
-      left: -35px;
       content: "✔";
+      margin-right: 5px;
     }
 
-    /* Add a red text color and an "x" icon when the requirements are wrong */
     .invalid {
       color: red;
     }
 
     .invalid:before {
-      position: relative;
-      left: -35px;
       content: "✖";
+      margin-right: 5px;
     }
 
     #fam {
-      position: static;
+      position: absolute;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       font-size: 40px;
       background-color: #ff7200;
-      /* Add a background color */
       color: #fff;
-      /* Change the text color to white */
-      padding: 10px;
-      /* Add some padding to make it more emphasized */
+      padding: 10px 20px;
       border-radius: 5px;
-      /* Add a border radius to make it more rounded */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      /* Add a box shadow to make it more prominent */
       white-space: nowrap;
-      /* Prevent text from wrapping to a new line */
       text-align: center;
-      /* Center the text horizontally */
+      max-width: 500px;
+      margin: 0 auto;
     }
 
     .main {
       margin-top: 50px;
     }
+
+    input[type="submit"].btnn {
+      background-color: #ff7200;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"].btnn:hover {
+      background-color: #ff9900;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #back {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #ff7200;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #back:hover {
+      background-color: #ff9900;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
   </style>
 
-  <button id="back"><a href="index.php">HOME</a></button>
+</head>
+
+<body>
+
+  <?php
+
+  // Database connection
+  $conn = mysqli_connect("db", "admin", "admin123", "db_tarz");
+
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+
+  if (isset($_POST['regs'])) {
+    extract($_POST);
+
+    $Pass = password_hash($pass, PASSWORD_BCRYPT);
+
+    if (empty($fname) || empty($lname) || empty($email) || empty($lic) || empty($ph) || empty($pass) || empty($gender)) {
+      echo '<script>alert("please fill the place")</script>';
+    } else {
+      if ($pass == $cpass) {
+        $sql2 = "SELECT * from users where EMAIL='$email'";
+        $result = mysqli_query($conn, $sql2);
+
+        if (mysqli_num_rows($result) > 0) {
+          echo '<script>alert("EMAIL ALREADY EXISTS PRESS OK FOR LOGIN!!")</script>';
+          echo '<script> window.location.href = "index.php";</script>';
+        } else {
+          $sql = "insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender')";
+          mysqli_query($conn, $sql);
+
+          echo '<script>alert("Registration Successful Press ok to login")</script>';
+          echo '<script> window.location.href = "index.php";</script>';
+        }
+      } else {
+        echo '<script>alert("PASSWORD DID NOT MATCH")</script>';
+        echo '<script> window.location.href = "register.php";</script>';
+      }
+    }
+  }
+
+  ?>
+
+  <div id="fam">Join TZ CAR RENTAL</div>
+  <button id="back" onclick="window.location.href='index.php'">HOME</button>
   <div class="main">
-    <h1 id="fam">Join TZ CAR RENTAL (URDANETA)</h1>
     <div style="margin-bottom: 20px;"></div>
     <div class="register">
-      <form id="register"  method="POST">
+      <form id="register" method="POST">
         <h2>Register Here</h2>
         <label>First Name : </label>
         <br>
@@ -209,11 +236,7 @@ if (isset($_SESSION['user'])) {
         </tr>
         <br><br>
 
-        <input type="submit" class="btnn" value="REGISTER" name="regs" style="background-color: #ff7200;color: white">
-
-
-
-        </input>
+        <input type="submit" class="btnn" value="REGISTER" name="regs">
 
       </form>
     </div>
