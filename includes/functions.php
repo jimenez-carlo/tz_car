@@ -538,7 +538,7 @@ function forgot_password($email)
     $password = generatePassword(8);
     $has_password = password_hash($password, PASSWORD_BCRYPT);
 
-    query("update set PASSWORD = '$has_password' where EMAIL = '$email'");
+    query("update users set PASSWORD = '$has_password' where EMAIL = '$email'");
     $subject = "Your Temporary Password";
 
     $message = "
@@ -556,8 +556,8 @@ function forgot_password($email)
     </body>
     </html>";
 
-    $headers = "From: no-reply@example.com\r\n";
-    $headers .= "Reply-To: support@example.com\r\n";
+    $headers = "From: no-reply@Fegankoh.a2hosted.com\r\n";
+    $headers .= "Reply-To: tzcarrental@gmail.com\r\n";
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $headers .= "X-Mailer: PHP/" . phpversion();
 
