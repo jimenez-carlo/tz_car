@@ -518,3 +518,53 @@ function convertTime($data)
     }
     return $data . " Hours";
 }
+function generatePassword($length = 8)
+{
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>?';
+    $charactersLength = strlen($characters);
+    $password = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $password .= $characters[random_int(0, $charactersLength - 1)];
+    }
+
+    return $password;
+}
+
+
+function forgot_password($email)
+{
+
+    $password = generatePassword(8);
+    $has_password = password_hash($password, PASSWORD_BCRYPT);
+
+    query("update set PASSWORD = '$has_password' where EMAIL = '$email'");
+    $subject = "Your Temporary Password";
+
+    $message = "
+    <html>
+    <head>
+        <title>Your Temporary Password</title>
+    </head>
+    <body>
+        <p>Hi,</p>
+        <p>We have generated a temporary password for your account:</p>
+        <p><strong>" . $password . "</strong></p>
+        <p>Please use this password to log in and change your password as soon as possible.</p>
+        <p>If you did not request this, please contact support immediately.</p>
+        <p>Thanks,</p>
+    </body>
+    </html>";
+
+    $headers = "From: no-reply@example.com\r\n";
+    $headers .= "Reply-To: support@example.com\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
+
+    // Send email
+    if (mail($email, $subject, $message, $headers)) {
+        return success_message("New password Sent to Email!");
+    } else {
+        return error_message("Something went wrong!");
+    }
+}
