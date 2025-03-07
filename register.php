@@ -1,3 +1,13 @@
+<?php include('includes/functions.php') ?>
+<?php
+if (isset($_SESSION['user'])) {
+  if ($_SESSION['user']->access_id == 1 || $_SESSION['user']->access_id == 2) {
+    header('location:admin');
+  } else if ($_SESSION['user']->access_id == 3) {
+    header('location:client/index.php');
+    include('fetch_cars.php');
+  }
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,36 +145,31 @@
   <?php
 
   // Database connection
-  $conn = mysqli_connect("db", "admin", "admin123", "db_tarz");
-
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  }
 
   if (isset($_POST['regs'])) {
-    extract($_POST);
+    extract(array_merge($_POST, $_FILES));
 
     $Pass = password_hash($pass, PASSWORD_BCRYPT);
 
     if (empty($fname) || empty($lname) || empty($email) || empty($lic) || empty($ph) || empty($pass) || empty($gender)) {
-      echo '<script>alert("please fill the place")</script>';
+      echo error_message("please fill the place");
     } else {
       if ($pass == $cpass) {
         $sql2 = "SELECT * from users where EMAIL='$email'";
         $result = mysqli_query($conn, $sql2);
 
         if (mysqli_num_rows($result) > 0) {
-          echo '<script>alert("EMAIL ALREADY EXISTS PRESS OK FOR LOGIN!!")</script>';
+          echo error_message('EMAIL ALREADY EXISTS PRESS OK FOR LOGIN!!');
           echo '<script> window.location.href = "index.php";</script>';
         } else {
-          $sql = "insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender')";
-          mysqli_query($conn, $sql);
+          $img = upload_pic($license_ss, "images");
+          query("insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER,LICENSE_SS) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender','$img')");
 
-          echo '<script>alert("Registration Successful Press ok to login")</script>';
+          echo success_message('Registration Successful Press ok to login');
           echo '<script> window.location.href = "index.php";</script>';
         }
       } else {
-        echo '<script>alert("PASSWORD DID NOT MATCH")</script>';
+        echo error_message('PASSWORD DID NOT MATCH');
         echo '<script> window.location.href = "register.php";</script>';
       }
     }
@@ -177,7 +182,7 @@
   <div class="main">
     <div style="margin-bottom: 20px;"></div>
     <div class="register">
-      <form id="register" method="POST">
+      <form id="register" method="POST" enctype="multipart/form-data">
         <h2>Register Here</h2>
         <label>First Name : </label>
         <br>
@@ -202,7 +207,10 @@
         <input type="text" name="lic"
           id="name" placeholder="Enter Your License number" required>
         <br><br>
-
+        <label>License Screenshot : </label>
+        <br>
+        <input type="file" name="license_ss" required>
+        <br><br>
         <label>Phone Number : </label>
         <br>
         <input type="tel" name="ph" maxlength="10" onkeypress="return onlyNumberKey(event)"

@@ -469,7 +469,7 @@ if (isset($_SESSION['user'])) {
 </style>
 
 
-<?= (isset($_POST['submit'])) ? updateUser($_POST) : ''; ?>
+<?= (isset($_POST['submit'])) ? updateUser(array_merge($_POST, $_FILES)) : ''; ?>
 <?php $data = get_one("select * from users where EMAIL = '" . $_SESSION['user']->EMAIL . "'") ?>
 
 <div class="navbar">
@@ -497,7 +497,7 @@ if (isset($_SESSION['user'])) {
 </div>
 <div class="register" style="width: 80%; margin: 40px auto;">
   <h2>Profile</h2>
-  <form id="register" method="POST">
+  <form id="register" method="POST" enctype="multipart/form-data">
     <label>Firstname : </label>
     <br>
     <input type="text" name="fname" id="name" placeholder="Enter Your First Name" required="" class="form-input" value="<?= $data->FNAME ?>">
@@ -513,6 +513,10 @@ if (isset($_SESSION['user'])) {
     <label>License Number : </label>
     <br>
     <input type="text" name="lic" id="name" placeholder="Enter Your Licensed Number" required="" class="form-input" value="<?= $data->LIC_NUM ?>">
+    <br><br>
+    <label>License Screenshot : </label>
+    <br>
+    <input type="file" name="license_ss" required>
     <br><br>
     <label>Phone Number : </label>
     <br>

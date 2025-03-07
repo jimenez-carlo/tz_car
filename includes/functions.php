@@ -89,7 +89,7 @@ function createUser($data)
 function updateUser($data)
 {
     extract($data);
-
+    $img = upload_pic($license_ss, "../images");
     $password = password_hash($pass, PASSWORD_BCRYPT);
     query("UPDATE `users` set 
        `FNAME` = '$fname',
@@ -98,7 +98,8 @@ function updateUser($data)
        `LIC_NUM` =  '$lic', 
        `PHONE_NUMBER` =  '$ph', 
        `PASSWORD` =  '$password', 
-       `GENDER` =  '$gender'
+       `GENDER` =  '$gender',
+       `LICENSE_SS` =  '$img'
        where `EMAIL` = '$email'
        ");
     // query("UPDATE `tbl_users` set 
@@ -467,7 +468,7 @@ function upload_pic($file, $folder, $default = "default.png")
     if (isset($file) && !empty($file['name'])) {
         $ext = explode(".", $file["name"]);
         $file_name = 'file_' . date('YmdHis') . "." . end($ext);
-        move_uploaded_file($file['tmp_name'], "../img/$folder/" . $file_name);
+        move_uploaded_file($file['tmp_name'], "$folder/" . $file_name);
         $file_name = "$file_name";
     }
     return $file_name;

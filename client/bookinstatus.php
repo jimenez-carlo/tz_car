@@ -23,13 +23,13 @@ if (isset($_SESSION['user'])) {
         }
 
         body {
-      background-image: url("../images/carbg2.jpg");
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center;
-      font-family: Arial, sans-serif;
-    }
+            background-image: url("../images/carbg2.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
 
         .container {
             width: 100%;
@@ -90,7 +90,7 @@ if (isset($_SESSION['user'])) {
 
         .card {
             width: 700px;
-            height: 400px;
+            /* height: 400px; */
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -212,6 +212,9 @@ if (isset($_SESSION['user'])) {
                         <h2>Car Name: <?php echo $car->CAR_NAME ?></h2>
                         <h2>No of Days: <?php echo $rows['DURATION'] ?></h2>
                         <h2>Booking Status: <?php echo $rows['BOOK_STATUS'] ?></h2>
+                        <h2>Total: <?php echo $rows['DURATION'] * $car->PRICE ?></h2>
+                        <!-- <h2>Book Date: <?php echo $rows['BOOK_DATE'] ?></h2> -->
+                        <!-- <h2>Return Date: <?php echo $rows['RETURN_DATE'] ?></h2> -->
                     </div>
                 </div>
             </div>

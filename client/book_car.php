@@ -660,6 +660,16 @@ if (isset($_SESSION['user'])) {
                     <input type="text" value="<?= $car->PRICE ?>" disabled id="price">
                   </td>
                 </tr>
+                <tr>
+                  <td colspan="2">
+                    <label>license:</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <img src="../images/<?= $_SESSION['user']->LICENSE_SS ?>" alt="" style="width:310px;height:150px">
+                  </td>
+                </tr>
               </table>
             </fieldset>
           </div>
@@ -672,7 +682,7 @@ if (isset($_SESSION['user'])) {
                     <label>Book Date:</label>
                   </td>
                   <td>
-                    <input type="date" name="book_date" required id="book_date">
+                    <input type="datetime-local" name="book_date" required id="book_date">
                   </td>
                 </tr>
                 <tr>
@@ -680,7 +690,16 @@ if (isset($_SESSION['user'])) {
                     <label>Return Date:</label>
                   </td>
                   <td>
-                    <input type="date" name="return_date" required id="return_date">
+                    <input type="datetime-local" name="return_date" required id="return_date">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Duration:</label>
+                  </td>
+                  <td>
+                    <input type="number" disabled id="duration">
+                    <input type="hidden" name="duration" id="duration2">
                   </td>
                 </tr>
                 <tr>
@@ -772,33 +791,56 @@ if (isset($_SESSION['user'])) {
     </div>
   </div>
   <script>
+    function calculateDifference() {
+      const startDate = document.getElementById('book_date').value;
+      const endDate = document.getElementById('return_date').value;
+
+      if (startDate && endDate) {
+        // Convert the input values into Date objects
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        start.setHours(0, 0, 0, 0);
+        end.setHours(0, 0, 0, 0);
+        // Calculate the difference in milliseconds
+        const differenceInMilliseconds = end - start;
+
+        // Convert milliseconds to days
+        const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+        // Display the result
+        return Math.abs(differenceInDays);
+      } else {
+        return 1;
+      }
+    }
+
     document.getElementById("book_date").addEventListener("input", function() {
       let bookDate = document.getElementById("book_date").value;
       let returnDate = document.getElementById("return_date").value;
       let price = document.getElementById("price").value;
+      let duration = document.getElementById("duration");
+      let duration2 = document.getElementById("duration2");
       let total = document.getElementById("total");
 
       if (bookDate && returnDate) {
-        let date1 = new Date(bookDate);
-        let date2 = new Date(returnDate);
-        let timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        total.value = price * diffDays;
+        total.value = price * calculateDifference();
+        duration.value = calculateDifference();
+        duration2.value = calculateDifference();
       }
     });
 
     document.getElementById("return_date").addEventListener("input", function() {
       let bookDate = document.getElementById("book_date").value;
       let returnDate = document.getElementById("return_date").value;
-      let price = document.getElementById("price").value;
+      let duration = document.getElementById("duration");
+      let duration2 = document.getElementById("duration2");
       let total = document.getElementById("total");
 
       if (bookDate && returnDate) {
-        let date1 = new Date(bookDate);
-        let date2 = new Date(returnDate);
-        let timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        total.value = price * diffDays;
+        total.value = price * calculateDifference();
+        duration.value = calculateDifference();
+        duration2.value = calculateDifference();
       }
     });
   </script>
