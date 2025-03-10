@@ -822,9 +822,8 @@ if (isset($_SESSION['user'])) {
       let duration = document.getElementById("duration");
       let duration2 = document.getElementById("duration2");
       let total = document.getElementById("total");
-
       if (bookDate && returnDate) {
-        total.value = price * calculateDifference();
+        total.value = parseFloat(price) * calculateDifference();
         duration.value = calculateDifference();
         duration2.value = calculateDifference();
       }
@@ -833,12 +832,13 @@ if (isset($_SESSION['user'])) {
     document.getElementById("return_date").addEventListener("input", function() {
       let bookDate = document.getElementById("book_date").value;
       let returnDate = document.getElementById("return_date").value;
+      let price = document.getElementById("price").value;
       let duration = document.getElementById("duration");
       let duration2 = document.getElementById("duration2");
       let total = document.getElementById("total");
 
       if (bookDate && returnDate) {
-        total.value = price * calculateDifference();
+        total.value = parseFloat(price) * calculateDifference();
         duration.value = calculateDifference();
         duration2.value = calculateDifference();
       }

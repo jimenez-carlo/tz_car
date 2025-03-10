@@ -8,7 +8,6 @@ if (isset($_SESSION['user'])) {
         include('fetch_cars.php');
     }
 } ?>
-<?= (isset($_POST['submit'])) ? loginUser($_POST) : ''; ?>
 <!DOCTYPE html>
 <html lang="en">
 

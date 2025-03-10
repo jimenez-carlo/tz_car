@@ -312,32 +312,34 @@ if (!isset($_SESSION['user']) || $_SESSION['user']->access_id != 3) {
         <?php
         // Updated car list query: Exclude only bookings that are not rejected.
         foreach (
-          $result = get_list("
-              SELECT c.*
-              FROM cars c
-              WHERE c.AVAILABLE = 'Y'
-                -- Exclude cars that have any confirmed booking for the user
-                AND c.CAR_ID NOT IN (
-                    SELECT b.CAR_ID
-                    FROM booking b
-                    WHERE b.EMAIL = '" . $_SESSION['user']->EMAIL . "'
-                      AND b.BOOK_STATUS = 'CONFIRMED'
-                )
-                -- Include cars that either have a REJECTED/RETURNED booking OR no booking record at all for the user
-                AND (
-                    c.CAR_ID IN (
-                        SELECT b.CAR_ID
-                        FROM booking b
-                        WHERE b.EMAIL = '" . $_SESSION['user']->EMAIL . "'
-                          AND b.BOOK_STATUS IN ('REJECTED', 'RETURNED')
-                    )
-                    OR c.CAR_ID NOT IN (
-                        SELECT b.CAR_ID
-                        FROM booking b
-                        WHERE b.EMAIL = '" . $_SESSION['user']->EMAIL . "'
-                    )
-                )
-          ") as $result
+          // $result = get_list("
+          //     SELECT c.*
+          //     FROM cars c
+          //     WHERE c.AVAILABLE = 'Y'
+          //       -- Exclude cars that have any confirmed booking for the user
+          //       AND c.CAR_ID NOT IN (
+          //           SELECT b.CAR_ID
+          //           FROM booking b
+          //           WHERE b.EMAIL = '" . $_SESSION['user']->EMAIL . "'
+          //             AND b.BOOK_STATUS = 'CONFIRMED'
+          //       )
+          //       -- Include cars that either have a REJECTED/RETURNED booking OR no booking record at all for the user
+          //       AND (
+          //           c.CAR_ID IN (
+          //               SELECT b.CAR_ID
+          //               FROM booking b
+          //               WHERE b.EMAIL = '" . $_SESSION['user']->EMAIL . "'
+          //                 AND b.BOOK_STATUS IN ('REJECTED', 'RETURNED')
+          //           )
+          //           OR c.CAR_ID NOT IN (
+          //               SELECT b.CAR_ID
+          //               FROM booking b
+          //               WHERE b.EMAIL = '" . $_SESSION['user']->EMAIL . "'
+          //           )
+          //       )
+          // ")
+          get_list("SELECT c.* FROM cars c WHERE c.AVAILABLE = 'Y'")
+          as $result
         ) {
         ?>
           <li>
