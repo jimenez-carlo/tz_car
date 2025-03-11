@@ -770,12 +770,12 @@ if (isset($_SESSION['user'])) {
                     <img src="../images/cod.jpg" alt="" style="width:310px;height:450px" id="cod-image" onclick="openImage('cod-image')">
                   </td>
                 </tr>
-                <tr>
+                <tr id="ss-row">
                   <td>
                     <label>Screenshot:</label>
                   </td>
                   <td>
-                    <input type="file" name="image" required>
+                    <input type="file" name="image" required id="ss">
                   </td>
                 </tr>
               </table>
@@ -785,7 +785,7 @@ if (isset($_SESSION['user'])) {
         <input type="hidden" name="email" value="<?= $_SESSION['user']->EMAIL ?>">
         <input type="hidden" name="car_id" value="<?= $car->CAR_ID ?>">
         <input type="hidden" name="price" value="<?= $car->PRICE ?>">
-        <input type="hidden" name=" book_status" value="UNDER PROCESSING">
+        <input type="hidden" name="book_status" value="UNDER PROCESSING">
         <input type="submit" class="btnn" value="BOOK" name="submit">
       </form>
     </div>
@@ -850,19 +850,27 @@ if (isset($_SESSION['user'])) {
       let gcashImageRow = document.getElementById("gcash-image-row");
       let paymayaImageRow = document.getElementById("paymaya-image-row");
       let codImageRow = document.getElementById("cod-image-row");
+      let ssRow = document.getElementById("ss-row");
+      let ss = document.getElementById("ss");
 
       if (paymentMethod === "Gcash") {
         gcashImageRow.style.display = "table-row";
         paymayaImageRow.style.display = "none";
         codImageRow.style.display = "none";
+        ssRow.style.display = "table-row";
+        ss.required = true;
       } else if (paymentMethod === "Paymaya") {
         gcashImageRow.style.display = "none";
         paymayaImageRow.style.display = "table-row";
         codImageRow.style.display = "none";
+        ssRow.style.display = "table-row";
+        ss.required = true;
       } else if (paymentMethod === "Cash on Delivery") {
         gcashImageRow.style.display = "none";
         paymayaImageRow.style.display = "none";
         codImageRow.style.display = "table-row";
+        ssRow.style.display = "none";
+        ss.required = false;
       }
     });
   </script>

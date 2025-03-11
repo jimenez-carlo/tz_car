@@ -346,7 +346,7 @@ car_id = '$car_id', amount = '$amount' where booking_id = $id");
 function createBook($data)
 {
     extract($data);
-    $img = upload_pic($image, "../images");
+    $img = upload_pic($image, "../images", "cod.jpg");
 
     $price = (int)$price * (int)$duration;
     $id = get_inserted_id("INSERT INTO `booking` 

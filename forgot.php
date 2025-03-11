@@ -213,7 +213,7 @@ if (isset($_SESSION['user'])) {
 </head>
 
 <body>
-    <?= (isset($_POST['submit'])) ? forgot_password($username) : ''; ?>
+    <?= (isset($_POST['submit'])) ? forgot_password($_POST['username']) : ''; ?>
     <div class="hai">
         <div class="navbar">
             <div class="icon">

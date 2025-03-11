@@ -213,7 +213,7 @@ if (isset($_SESSION['user'])) {
         <br><br>
         <label>Phone Number : </label>
         <br>
-        <input type="tel" name="ph" maxlength="10" onkeypress="return onlyNumberKey(event)"
+        <input type="tel" name="ph" maxlength="11" onkeypress="return onlyNumberKey(event)"
           id="name" placeholder="Enter Your Phone Number" required>
         <br><br>
 
