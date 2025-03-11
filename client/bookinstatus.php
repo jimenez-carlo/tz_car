@@ -118,7 +118,7 @@ if (isset($_SESSION['user'])) {
             font-weight: bold;
         }
 
-        .card-header .back-btn {
+        .back-btn {
             background-color: #ff7200;
             color: #fff;
             border: none;
@@ -127,7 +127,7 @@ if (isset($_SESSION['user'])) {
             cursor: pointer;
         }
 
-        .card-header .back-btn:hover {
+        .back-btn:hover {
             background-color: #ff8c00;
         }
 
@@ -186,6 +186,33 @@ if (isset($_SESSION['user'])) {
 <body>
     <?php
 
+    if (empty(has_result("select * from booking where EMAIL='" . $_SESSION['user']->EMAIL . "' order by BOOK_ID "))) { ?>
+
+        <div class="container">
+            <div class="header">
+                <div class="logo">TZ CAR RENTAL (URDANETA)</div>
+                <div class="nav">
+
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="title">No Rent Yet.</div>
+                        <a href="index.php">
+                            <button class="back-btn">Go Back</button>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
+    <?= (isset($_POST['cancel'])) ? cancelCar($_POST) : ''; ?>
+    <?= (isset($_POST['return'])) ? returnCar($_POST) : ''; ?>
+    <?php
     foreach (get_list("select * from booking where EMAIL='" . $_SESSION['user']->EMAIL . "' order by BOOK_ID ") as $key => $rows) {
         $car = get_one("select * from cars where CAR_ID = " . $rows['CAR_ID']);
     ?>
@@ -215,6 +242,17 @@ if (isset($_SESSION['user'])) {
                         <h2>Total: <?php echo $rows['DURATION'] * $car->PRICE ?></h2>
                         <!-- <h2>Book Date: <?php echo $rows['BOOK_DATE'] ?></h2> -->
                         <!-- <h2>Return Date: <?php echo $rows['RETURN_DATE'] ?></h2> -->
+                        <form method="post">
+                            <input type="hidden" name="book_id" value="<?= $rows['BOOK_ID'] ?>">
+                            <input type="hidden" name="car_id" value="<?= $rows['CAR_ID'] ?>">
+                            <?php if ($rows['BOOK_STATUS'] == "UNDER PROCESSING" || $rows['BOOK_STATUS'] == "CONFIRMED") { ?>
+                                <button class="back-btn" type="submit" name="cancel" value="1">CANCEL</button>
+                            <?php } ?>
+                            <?php if ($rows['BOOK_STATUS'] == "CONFIRMED") { ?>
+                                <button class="back-btn" type="submit" name="return" value="1">RETURN</button>
+                            <?php } ?>
+                        </form>
+                        </form>
                     </div>
                 </div>
             </div>

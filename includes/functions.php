@@ -129,6 +129,22 @@ function createBrand($data)
     return success_message("Brand Created Successfully!");
 }
 
+function cancelCar($data)
+{
+    extract($data);
+    query("UPDATE cars set AVAILABLE = 'Y' where CAR_ID = '$car_id'");
+    query("UPDATE booking set BOOK_STATUS = 'CANCELLED' where BOOK_ID = '$book_id'");
+    return success_message("Car Cancelled Successfully");
+}
+
+function returnCar($data)
+{
+    extract($data);
+    query("UPDATE cars set AVAILABLE = 'Y' where CAR_ID = '$car_id'");
+    query("UPDATE booking set BOOK_STATUS = 'RETURNED' where BOOK_ID = '$book_id'");
+    return success_message("Car Returned Successfully");
+}
+
 function updateBrand($data)
 {
     extract($data);

@@ -302,30 +302,20 @@ if (isset($_SESSION['user'])) {
         <tbody>
           <?php
           if (isset($_POST['confirm'])) {
-            $id = $_POST['id'];
-            $car_id = $_POST['car_id'];
-            $status = "CONFIRMED";
-            $query = "UPDATE booking SET BOOK_STATUS = '$status' WHERE BOOK_ID = '$id'";
-            $result = query($query);
-            $query = "UPDATE cars SET AVAILABLE = 'N' WHERE CAR_ID = '$car_id'";
-            $result = query($query);
+            extract($_POST);
+            query("UPDATE booking SET BOOK_STATUS = 'CONFIRMED' WHERE BOOK_ID = '$id'");
+            query("UPDATE cars SET AVAILABLE = 'N' WHERE CAR_ID = '$car_id'");
+            echo success_message("Car Confirmed Successfully!");
           } elseif (isset($_POST['return'])) {
-            $id = $_POST['id'];
-            $car_id = $_POST['car_id'];
-            $status = "RETURNED";
-            $query = "UPDATE booking SET BOOK_STATUS = '$status' WHERE BOOK_ID = '$id'";
-            $result = query($query);
-            $query = "UPDATE cars SET AVAILABLE = 'Y' WHERE CAR_ID = '$car_id'";
-            $result = query($query);
+            extract($_POST);
+            query("UPDATE booking SET BOOK_STATUS = 'RETURNED' WHERE BOOK_ID = '$id'");
+            query("UPDATE cars SET AVAILABLE = 'Y' WHERE CAR_ID = '$car_id'");
+            echo success_message("Car Returned Successfully!");
           } elseif (isset($_POST['reject'])) {
-            $id = $_POST['id'];
-            $car_id = $_POST['car_id'];
-            $status = "REJECTED";
-            $query = "UPDATE booking SET BOOK_STATUS = '$status' WHERE BOOK_ID = '$id'";
-            $result = query($query);
-            $query = "UPDATE cars SET AVAILABLE = 'Y' WHERE CAR_ID = '$car_id'";
-            $result = query($query);
-            
+            extract($_POST);
+            query("UPDATE booking SET BOOK_STATUS = 'REJECTED' WHERE BOOK_ID = '$id'");
+            query("UPDATE cars SET AVAILABLE = 'Y' WHERE CAR_ID = '$car_id'");
+            echo success_message("Car Rejected Successfully!");
           }
           foreach (get_list("SELECT b.CAR_ID,b.EMAIL,b.BOOK_PLACE,b.BOOK_DATE,b.PHONE_NUMBER, b.DESTINATION, b.RETURN_DATE, b.BOOK_STATUS,c.CAR_IMG,b.BOOK_ID,b.BOOK_SS, c.AVAILABLE  from booking b inner join cars c on c.CAR_ID = b.CAR_ID ORDER BY b.BOOK_ID DESC") as $key => $res) {
           ?>
@@ -357,7 +347,7 @@ if (isset($_SESSION['user'])) {
                     <button class="but" name="return">RETURNED</button>
                     <button class="but" name="reject">REJECT</button>
                   </form>
-                  
+
                 </div>
               </td>
             </tr>

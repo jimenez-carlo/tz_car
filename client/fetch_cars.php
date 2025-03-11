@@ -1,11 +1,11 @@
 <?php
 include('../includes/functions.php');
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 if (!isset($_SESSION['user']) || $_SESSION['user']->access_id != 3) {
-    header('location:../logout.php');
-    exit;
+  header('location:../logout.php');
+  exit;
 }
 
 $cars = get_list("SELECT c.*, b.BOOK_STATUS
@@ -14,6 +14,9 @@ $cars = get_list("SELECT c.*, b.BOOK_STATUS
                   WHERE c.AVAILABLE = 'Y'
                     AND b.EMAIL = '" . $_SESSION['user']->EMAIL . "'
                     AND b.BOOK_STATUS IN ('REJECTED', 'RETURNED')");
+// $cars = get_list("SELECT c.* FROM cars c 
+//                   WHERE c.AVAILABLE = 'Y'
+//                     ");
 
 
 
