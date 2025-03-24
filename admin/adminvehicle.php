@@ -257,6 +257,7 @@ if (isset($_SESSION['user'])) {
         </div>
         <div class="menu">
             <ul>
+                <li><a href="admincategory.php">CATEGORY</a></li>
                 <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
                 <li><a href="adminusers.php">USERS</a></li>
                 <li><a href="index.php">FEEDBACKS</a></li>
@@ -318,6 +319,7 @@ if (isset($_SESSION['user'])) {
                                 <form method="post">
                                     <input type="hidden" name="id" value="<?= $res['CAR_ID'] ?>">
                                     <button type="submit" name="delete" class="but">DELETE CAR</button>
+                                    <a href="car_photos.php?id=<?= $res['CAR_ID'] ?>"><button type="button" class="but">PHOTOS</button></a>
                                 </form>
                             </td>
 

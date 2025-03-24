@@ -139,7 +139,7 @@ if (isset($_SESSION['user'])) {
 </style>
 
 <body>
-
+    <?= (isset($_POST['submit'])) ? contact_us($_POST) : ''; ?>
     <div class="hai" style="height: fit-content;">
         <div class="navbar">
             <div class="icon">
@@ -147,7 +147,7 @@ if (isset($_SESSION['user'])) {
             </div>
             <div class="menu">
                 <ul>
-                    <li><a href="#">HOME</a></li>
+                    <li><a href="index.php">HOME</a></li>
                     <li><a href="aboutus.php">ABOUT</a></li>
                     <li><a href="contactus.php">CONTACT</a></li>
                     <li><button class="adminbtn"><a href="adminlogin.php">ADMIN</a></button></li>
@@ -192,23 +192,23 @@ if (isset($_SESSION['user'])) {
 
             </div>
             <div class="contactForm">
-                <form>
+                <form method="post">
                     <h2>Send Message</h2>
                     <div class="inputBox">
-                        <input type="text" name="" required="required">
+                        <input type="text" name="fullname" required="required">
                         <span>Full Name</span>
 
                     </div>
                     <div class="inputBox">
-                        <input type="text" name="" required="required">
+                        <input type="text" name="email" required="required">
                         <span>Email</span>
                     </div>
                     <div class="inputBox">
-                        <textarea required="required"></textarea>
+                        <textarea required="required" name="details"></textarea>
                         <span>Type your Message...</span>
                     </div>
                     <div class="inputBox">
-                        <input type="submit" name="" value="Send">
+                        <input type="submit" name="submit" value="Send">
 
                     </div>
                 </form>

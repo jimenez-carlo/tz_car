@@ -268,6 +268,7 @@ if (isset($_SESSION['user'])) {
     </div>
     <div class="menu">
       <ul>
+        <li><a href="admincategory.php">CATEGORY</a></li>
         <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
         <li><a href="adminusers.php">USERS</a></li>
         <li><a href="index.php">FEEDBACKS</a></li>
@@ -277,7 +278,7 @@ if (isset($_SESSION['user'])) {
       </ul>
     </div>
   </div>
-  <div class="hai">
+  <div class="hai" style="overflow: auto;">
     <div class="header-container">
       <h1 class="header">RENT HISTORY/PROCESS</h1>
     </div>
@@ -295,6 +296,8 @@ if (isset($_SESSION['user'])) {
             <th>RETURN DATE</th>
             <th>BOOKING STATUS</th>
             <th>SCREENSHOTS</th>
+            <th>LICENSE FRONT</th>
+            <th>LICENSE BACK</th>
             <th>ACTIONS</th>
 
           </tr>
@@ -335,9 +338,11 @@ if (isset($_SESSION['user'])) {
               </td>
               <td><?php echo $res['RETURN_DATE']; ?></php>
               </td>
-              <td><?php echo $res['BOOK_STATUS']; ?></php>
+              <td><?php echo ($res['BOOK_STATUS'] == "HIDDEN") ? "RETURNED" : $res['BOOK_STATUS']; ?></php>
               </td>
-              <td><img src="../images/<?php echo $res['BOOK_SS']; ?>" alt="" width="100" height="100" class="expandable-image" data-src="../images/<?php echo $res['BOOK_SS']; ?>"></td>
+              <td><img src="../images/<?php echo $res['BOOK_SS'] ?? "default_car.png"; ?>" alt="" width="100" height="100" class="expandable-image" data-src="../images/<?php echo $res['BOOK_SS'] ?? "default_car.png"; ?>"></td>
+              <td><img src="../images/<?php echo get_one("SELECT LICENSE_SS from users where EMAIL = '" . $res['EMAIL'] . "'")->LICENSE_SS ?? "default_car.png" ?>" alt="" width="100" height="100" class="expandable-image" data-src="../images/<?php echo get_one("SELECT LICENSE_SS from users where EMAIL = '" . $res['EMAIL'] . "'")->LICENSE_SS ?? "default_car.png" ?>"></td>
+              <td><img src="../images/<?php echo get_one("SELECT LICENSE_BACK from users where EMAIL = '" . $res['EMAIL'] . "'")->LICENSE_BACK ?? "default_car.png" ?>" alt="" width="100" height="100" class="expandable-image" data-src="../images/<?php echo get_one("SELECT LICENSE_BACK from users where EMAIL = '" . $res['EMAIL'] . "'")->LICENSE_BACK ?? "default_car.png" ?>"></td>
               <td>
                 <div class="actions">
                   <form action="" method="post">

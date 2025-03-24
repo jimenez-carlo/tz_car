@@ -102,6 +102,7 @@ if (isset($_SESSION['user'])) {
 
     .main {
       margin-top: 50px;
+      width: 100%;
     }
 
     input[type="submit"].btnn {
@@ -136,6 +137,10 @@ if (isset($_SESSION['user'])) {
       background-color: #ff9900;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
+
+    .register {
+      width: 700px;
+    }
   </style>
 
 </head>
@@ -163,7 +168,8 @@ if (isset($_SESSION['user'])) {
           echo '<script> window.location.href = "index.php";</script>';
         } else {
           $img = upload_pic($license_ss, "images");
-          query("insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER,LICENSE_SS) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender','$img')");
+          $img2 = upload_pic($license_back, "images");
+          query("insert into users (FNAME,LNAME,EMAIL,LIC_NUM,PHONE_NUMBER,PASSWORD,GENDER,LICENSE_SS,LICENSE_BACK) values('$fname','$lname','$email','$lic',$ph,'$Pass','$gender','$img','$img2')");
 
           echo success_message('Registration Successful Press ok to login');
           echo '<script> window.location.href = "index.php";</script>';
@@ -183,68 +189,78 @@ if (isset($_SESSION['user'])) {
     <div style="margin-bottom: 20px;"></div>
     <div class="register">
       <form id="register" method="POST" enctype="multipart/form-data">
-        <h2>Register Here</h2>
-        <label>First Name : </label>
-        <br>
-        <input type="text" name="fname"
-          id="name" placeholder="Enter Your First Name" required>
-        <br><br>
+        <center>
+          <h2>Register Here</h2>
+        </center>
+        <div style="display: flex;flex-direction:row">
+          <div style="margin-right: 20px;">
+            <label>First Name : </label>
+            <br>
+            <input type="text" name="fname"
+              id="name" placeholder="Enter Your First Name" required>
+            <br><br>
 
-        <label>Last Name : </label>
-        <br>
-        <input type="text" name="lname"
-          id="name" placeholder="Enter Your Last Name" required>
-        <br><br>
+            <label>Last Name : </label>
+            <br>
+            <input type="text" name="lname"
+              id="name" placeholder="Enter Your Last Name" required>
+            <br><br>
 
-        <label>Email : </label>
-        <br>
-        <input type="email" name="email"
-          id="name" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="ex: example@ex.com" placeholder="Enter Valid Email" required>
-        <br><br>
+            <label>Email : </label>
+            <br>
+            <input type="email" name="email"
+              id="name" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="ex: example@ex.com" placeholder="Enter Valid Email" required>
+            <br><br>
 
-        <label>Your License number : </label>
-        <br>
-        <input type="text" name="lic"
-          id="name" placeholder="Enter Your License number" required>
-        <br><br>
-        <label>License Screenshot : </label>
-        <br>
-        <input type="file" name="license_ss" required>
-        <br><br>
-        <label>Phone Number : </label>
-        <br>
-        <input type="tel" name="ph" maxlength="11" onkeypress="return onlyNumberKey(event)"
-          id="name" placeholder="Enter Your Phone Number" required>
-        <br><br>
+            <label>Your License number : </label>
+            <br>
+            <input type="text" name="lic"
+              id="name" placeholder="Enter Your License number" required>
+            <br><br>
+            <label>License FRONT : </label>
+            <br>
+            <input type="file" name="license_ss" required>
+            <br><br>
+            <label>License BACK : </label>
+            <br>
+            <input type="file" name="license_back" required>
+            <br><br>
+          </div>
+          <div>
 
+            <label>Phone Number : </label>
+            <br>
+            <input type="tel" name="ph" maxlength="11" onkeypress="return onlyNumberKey(event)"
+              id="name" placeholder="Enter Your Phone Number" required>
+            <br><br>
+            <label>Password : </label>
+            <br>
+            <input type="password" name="pass" maxlength="12"
+              id="psw" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+            <br><br>
+            <label>Confirm Password : </label>
+            <br>
+            <input type="password" name="cpass"
+              id="cpsw" placeholder="Renter the password" required>
+            <br><br>
+            <tr>
+              <td>
+                <label">Gender : </label>
+              </td><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td>
+                <label for="one">Male</label>
+                <input type="radio" id="input_enabled" name="gender" value="male" style="width:200px">
+              </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <td>
+                <label for="two">Female</label>
+                <input type="radio" id="input_disabled" name="gender" value="female" style="width:160px" />
+              </td>
+            </tr>
+            <br><br>
 
-
-        <label>Password : </label>
-        <br>
-        <input type="password" name="pass" maxlength="12"
-          id="psw" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
-        <br><br>
-        <label>Confirm Password : </label>
-        <br>
-        <input type="password" name="cpass"
-          id="cpsw" placeholder="Renter the password" required>
-        <br><br>
-        <tr>
-          <td>
-            <label">Gender : </label>
-          </td><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td>
-            <label for="one">Male</label>
-            <input type="radio" id="input_enabled" name="gender" value="male" style="width:200px">
-          </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <td>
-            <label for="two">Female</label>
-            <input type="radio" id="input_disabled" name="gender" value="female" style="width:160px" />
-          </td>
-        </tr>
-        <br><br>
-
-        <input type="submit" class="btnn" value="REGISTER" name="regs">
+            <input type="submit" class="btnn" value="REGISTER" name="regs">
+          </div>
+        </div>
 
       </form>
     </div>

@@ -514,9 +514,13 @@ if (isset($_SESSION['user'])) {
     <br>
     <input type="text" name="lic" id="name" placeholder="Enter Your Licensed Number" required="" class="form-input" value="<?= $data->LIC_NUM ?>">
     <br><br>
-    <label>License Screenshot : </label>
+    <label>License FRONT : </label>
     <br>
     <input type="file" name="license_ss" required>
+    <br><br>
+    <label>License BACK : </label>
+    <br>
+    <input type="file" name="license_back" required>
     <br><br>
     <label>Phone Number : </label>
     <br>

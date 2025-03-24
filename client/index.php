@@ -351,11 +351,15 @@ if (!isset($_SESSION['user']) || $_SESSION['user']->access_id != 3) {
               </div>
               <div class="content">
                 <h1><?php echo $result['CAR_NAME']; ?></h1>
+                <h2>Category: <a><?php echo $result['CATEGORY']; ?></a></h2>
                 <h2>Fuel Type: <a><?php echo $result['FUEL_TYPE']; ?></a></h2>
                 <h2>Capacity: <a><?php echo $result['CAPACITY']; ?></a></h2>
                 <h2>Rent Per Day: <a>₱<?php echo $result['PRICE']; ?>/-</a></h2>
                 <a href="book_car.php?car_id=<?= $result['CAR_ID'] ?>" class="utton">
                   <button type="button" name="submit" class="utton">Rent</button>
+                </a>
+                <a href="car_photos.php?car_id=<?= $result['CAR_ID'] ?>" class="utton">
+                  <button type="button" name="submit" class="utton">Car Photos</button>
                 </a>
               </div>
             </div>

@@ -180,6 +180,11 @@ if (isset($_SESSION['user'])) {
             color: #333;
             margin-bottom: 20px;
         }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -213,7 +218,7 @@ if (isset($_SESSION['user'])) {
     <?= (isset($_POST['cancel'])) ? cancelCar($_POST) : ''; ?>
     <?= (isset($_POST['return'])) ? returnCar($_POST) : ''; ?>
     <?php
-    foreach (get_list("select * from booking where EMAIL='" . $_SESSION['user']->EMAIL . "' order by BOOK_ID ") as $key => $rows) {
+    foreach (get_list("select * from booking where EMAIL='" . $_SESSION['user']->EMAIL . "' and BOOK_STATUS != 'HIDDEN' order by BOOK_ID ") as $key => $rows) {
         $car = get_one("select * from cars where CAR_ID = " . $rows['CAR_ID']);
     ?>
         <div class="container">
@@ -245,11 +250,13 @@ if (isset($_SESSION['user'])) {
                         <form method="post">
                             <input type="hidden" name="book_id" value="<?= $rows['BOOK_ID'] ?>">
                             <input type="hidden" name="car_id" value="<?= $rows['CAR_ID'] ?>">
-                            <?php if ($rows['BOOK_STATUS'] == "UNDER PROCESSING" || $rows['BOOK_STATUS'] == "CONFIRMED") { ?>
+                            <?php if ($rows['BOOK_STATUS'] == "UNDER PROCESSING") { ?>
                                 <button class="back-btn" type="submit" name="cancel" value="1">CANCEL</button>
                             <?php } ?>
-                            <?php if ($rows['BOOK_STATUS'] == "CONFIRMED") { ?>
+                            <?php if ($rows['BOOK_STATUS'] == "CONFIRMED" || $rows['BOOK_STATUS'] == "EXTENDED") { ?>
                                 <button class="back-btn" type="submit" name="return" value="1">RETURN</button>
+                                <a href="extend_car.php?book_id=<?= $rows['BOOK_ID'] ?>&car_id=<?= $rows['CAR_ID'] ?>">
+                                    <button class="back-btn" type="button">EXTEND</button></a>
                             <?php } ?>
                         </form>
                         </form>

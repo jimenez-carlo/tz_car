@@ -256,6 +256,7 @@ if (isset($_SESSION['user'])) {
         </div>
         <div class="menu">
             <ul>
+                <li><a href="admincategory.php">CATEGORY</a></li>
                 <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
                 <li><a href="adminusers.php">USERS</a></li>
                 <li><a href="index.php">FEEDBACKS</a></li>

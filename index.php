@@ -13,7 +13,7 @@ if (isset($_SESSION['user'])) {
 <html lang="en">
 
 <head>
-    <title>CAR RENTAL</title>
+    <title>TZ Car Rental</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
         /* General styles */
@@ -227,8 +227,8 @@ if (isset($_SESSION['user'])) {
         <div class="content">
             <div>
                 <h1>Rent your Car <br><span>at TZ Car Rental (URDANETA)</span></h1>
-                <p class="par">Here at TZ Car Rental (URDANETA)<br>
-                    Urdaneta, Pangasinan<br>Enjoy every moment with your family<br>
+                <p class="par">We offer Good Service<br>
+                    At Urdaneta, Pangasinan<br>Enjoy every moment with your family<br>
                     We offer a wide range of cars for rent and fast response!</p>
                 <button class="cn"><a href="register.php">JOIN US</a></button>
             </div>

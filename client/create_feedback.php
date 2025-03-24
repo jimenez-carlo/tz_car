@@ -491,23 +491,9 @@ if (isset($_SESSION['user'])) {
 <div class="register" style="width: 80%; margin: 40px auto;">
   <h2>Create Feedback</h2>
   <form id="register" method="POST">
-    <label>Rating : </label>
+    <label>Feedback : </label>
     <br>
-    <select name="rating" style="width: 100%; padding: 10px; font-size: 18px; border: 1px solid #ddd;">
-      <option value="1">1 - Poor</option>
-      <option value="2">2 - Fair</option>
-      <option value="3">3 - Good</option>
-      <option value="4">4 - Very Good</option>
-      <option value="5">5 - Excellent</option>
-    </select>
-    <br><br>
-    <label>Comment : </label>
-    <br>
-    <textarea name="comment" id="" rows="10" style="width: 100%; padding: 10px; font-size: 18px; border: 1px solid #ddd;" placeholder="Enter Feedback here"></textarea>
-    <br><br>
-    <label>Suggestions for Improvement : </label>
-    <br>
-    <textarea name="suggestions" id="" rows="5" style="width: 100%; padding: 10px; font-size: 18px; border: 1px solid #ddd;" placeholder="Enter Suggestions here"></textarea>
+    <textarea name="comment" id="" rows="10" style="width: 100%; padding: 10px; font-size: 18px; border: 1px solid #ddd;" placeholder="Enter your feedback here"></textarea>
     <br><br>
     <input type="submit" class="btnn" value="Submit Feedback" name="submit">
   </form>

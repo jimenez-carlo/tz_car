@@ -90,6 +90,7 @@ function updateUser($data)
 {
     extract($data);
     $img = upload_pic($license_ss, "../images");
+    $img2 = upload_pic($license_back, "../images");
     $password = password_hash($pass, PASSWORD_BCRYPT);
     query("UPDATE `users` set 
        `FNAME` = '$fname',
@@ -99,7 +100,8 @@ function updateUser($data)
        `PHONE_NUMBER` =  '$ph', 
        `PASSWORD` =  '$password', 
        `GENDER` =  '$gender',
-       `LICENSE_SS` =  '$img'
+       `LICENSE_SS` =  '$img',
+       `LICENSE_BACK` =  '$img2',
        where `EMAIL` = '$email'
        ");
     // query("UPDATE `tbl_users` set 
@@ -160,14 +162,25 @@ function updateBrand($data)
 function createCategory($data)
 {
     extract($data);
-    if (has_result("select * from tbl_car_category where car_category = '$car_category'")) {
+    if (has_result("select * from `category` where category_name = '$category_name'")) {
         return error_message("Category Name Already in-use");
     }
 
-    query("INSERT INTO `tbl_car_category` (`car_category`) values('$car_category')");
+    query("INSERT INTO `category` (`category_name`) values('$category_name')");
     unset($_POST);
     return success_message("Category Created Successfully!");
 }
+// function createCategory($data)
+// {
+//     extract($data);
+//     if (has_result("select * from tbl_car_category where car_category = '$car_category'")) {
+//         return error_message("Category Name Already in-use");
+//     }
+
+//     query("INSERT INTO `tbl_car_category` (`car_category`) values('$car_category')");
+//     unset($_POST);
+//     return success_message("Category Created Successfully!");
+// }
 
 function updateCategory($data)
 {
@@ -219,10 +232,21 @@ function createCarv2($data)
     extract($data);
 
     $img = upload_pic($image, "../images");
-    query("INSERT INTO cars(CAR_NAME,FUEL_TYPE,CAPACITY,PRICE,CAR_IMG,AVAILABLE) values('$carname','$ftype',$capacity,$price,'$img','$available')");
+    query("INSERT INTO cars(CAR_NAME,FUEL_TYPE,CAPACITY,PRICE,CAR_IMG,AVAILABLE,CATEGORY) values('$carname','$ftype',$capacity,$price,'$img','$available', '$category_name')");
 
     unset($_POST, $_FILES);
     return success_message("Car Created Successfully!");
+}
+
+function createPhoto($data)
+{
+    extract($data);
+
+    $img = upload_pic($image, "../images");
+    query("INSERT INTO car_interrior(CAR_ID,`image`) values('$car_id','$img')");
+
+    unset($_POST, $_FILES);
+    return success_message("Photo Uploaded Successfully!");
 }
 
 function createCar($data)
@@ -375,6 +399,9 @@ BOOK_SS) values(
 '$img'
 )");
 
+    if (isset($book_id)) {
+        query("UPDATE booking set BOOK_STATUS ='HIDDEN' where BOOK_ID = '$book_id'");
+    }
     query("update cars set AVAILABLE = 'N' where CAR_ID = '$car_id'");
 
     unset($_POST, $_FILES);
@@ -581,6 +608,36 @@ function forgot_password($email)
     // Send email
     if (mail($email, $subject, $message, $headers)) {
         return success_message("New password Sent to Email!");
+    } else {
+        return error_message("Something went wrong!");
+    }
+}
+
+function contact_us($data)
+{
+    extract($data);
+
+    $subject = "Customer Contact";
+
+    $message = "
+    <html>
+    <head>
+        <title>Contact</title>
+    </head>
+    <body>
+            <p>$details</p>
+            <p>- from $fullname</p>
+    </body>
+    </html>";
+
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: tzcarrental@gmail.com\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
+
+    // Send email
+    if (mail("tzcarrental@gmail.com", $subject, $message, $headers)) {
+        return success_message("Email Sent!");
     } else {
         return error_message("Something went wrong!");
     }

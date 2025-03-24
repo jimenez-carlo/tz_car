@@ -356,6 +356,7 @@ if (isset($_SESSION['user'])) {
         </div>
         <div class="menu">
             <ul>
+                <li><a href="admincategory.php">CATEGORY</a></li>
                 <li><a href="adminvehicle.php">VEHICLE MANAGEMENT</a></li>
                 <li><a href="adminusers.php">USERS</a></li>
                 <li><a href="index.php">FEEDBACKS</a></li>
@@ -374,6 +375,14 @@ if (isset($_SESSION['user'])) {
                 <br>
                 <input type="text" name="carname"
                     id="name" placeholder="Enter Car Name" required>
+                <br><br>
+                <label>Category : </label>
+                <br>
+                <select name="category" id="" style="width: 100%;height:35px">
+                    <?php foreach (get_list("select * from category") as $key => $value) { ?>
+                        <option value="<?= $value['category_name'] ?>"><?= $value['category_name'] ?></option>
+                    <?php } ?>
+                </select>
                 <br><br>
 
                 <label>Fuel Type : </label>

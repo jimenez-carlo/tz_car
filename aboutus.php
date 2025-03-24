@@ -1,10 +1,9 @@
-<?php include('includes/functions.php') ?>
+<?php include('../includes/functions.php') ?>
 <?php
 if (isset($_SESSION['user'])) {
-    if ($_SESSION['user']->access_id == 1 || $_SESSION['user']->access_id == 2) {
-        header('location:admin');
-    } else if ($_SESSION['user']->access_id == 3) {
-        header('location:client');
+    if ($_SESSION['user']->access_id == 3) {
+    } else {
+        header('location:../logout.php');
     }
 } ?>
 <!DOCTYPE html>
@@ -13,9 +12,9 @@ if (isset($_SESSION['user'])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CaRs | Car Details</title>
+    <title>TZ Car Rental | About Us</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
 </head>
 
@@ -31,9 +30,11 @@ if (isset($_SESSION['user'])) {
 
         body {
             font-family: 'Playfair Display', serif;
-            background-image: url('images/carbg2.jpg');
+            display: grid;
+            background-image: url("../images/carbg2.jpg");
             background-size: cover;
             background-position: center;
+            align-content: center;
             min-height: 100vh;
         }
 
@@ -51,7 +52,7 @@ if (isset($_SESSION['user'])) {
             background-color: #12192c;
             display: flex;
             border-radius: 12px 0 0 12px;
-            /* height: 50vh; */
+            height: 50vh;
             margin: 50px auto;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             border-radius: 12px;
@@ -228,56 +229,41 @@ if (isset($_SESSION['user'])) {
             color: #000;
             font-weight: bold;
         }
-
-        .hai {
-            background: unset;
-        }
     </style>
-    <div class="hai" style="height: fit-content;">
-        <div class="navbar">
-            <div class="icon">
-                <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
-            </div>
-            <div class="menu">
-                <ul>
-                    <li><a href="index.php">HOME</a></li>
-                    <li><a href="aboutus.php">ABOUT</a></li>
-                    <li><a href="contactus.php">CONTACT</a></li>
-                    <li><button class="adminbtn"><a href="adminlogin.php">ADMIN</a></button></li>
-                    </li>
-                </ul>
+
+    <section>
+        <div class="image">
+            <div class="map-box">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.7407784734482!2d120.5572881!3d15.974907900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33913f00708f31cb%3A0x6858fcfd38045593!2sTZ%20Car%20Trading!5e0!3m2!1sen!2sph!4v1739430596312!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
 
-        <div style="display: flex;">
-            <div class="image">
-                <div class="map-box">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.7407784734482!2d120.5572881!3d15.974907900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33913f00708f31cb%3A0x6858fcfd38045593!2sTZ%20Car%20Trading!5e0!3m2!1sen!2sph!4v1739430596312!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-
-            <div class="content" style="width: 55vw;">
-                <h2>TZ CAR RENTAL (URDANETA)</h2>
-                <span><!-- line here --></span>
-                <p>We are pleased you chose TZ CAR RENTAL (URDANETA) Urdaneta to rent a car, We have lots of cars to choose from and we are happy to serve you always anytime anywhere!</p>
-
-                <ul class="icons">
-                    <li>
-                        <i class="fa fa-twitter"></i>
-                    </li>
-                    <li>
-                        <i class="fa fa-facebook"></i>
-                    </li>
-                    <li>
-                        <i class="fa fa-github"></i>
-                    </li>
-                    <li>
-                        <i class="fa fa-pinterest"></i>
-                    </li>
-                </ul>
-            </div>
+        <div class="content">
+            <h2>TZ CAR RENTAL (URDANETA)</h2>
+            <span><!-- line here --></span>
+            <p>We are pleased you chose TZ CAR RENTAL (URDANETA) Urdaneta to rent a car, We have lots of cars to choose from and we are happy to serve you always anytime anywhere!</p>
+            <ul class="links">
+        
+    
+                <li><a href="contactus.php">contact</a></li>
+            </ul>
+            <ul class="icons">
+                <li>
+                    <i class="fa fa-twitter"></i>
+                </li>
+                <li>
+                    <i class="fa fa-facebook"></i>
+                </li>
+                <li>
+                    <i class="fa fa-github"></i>
+                </li>
+                <li>
+                    <i class="fa fa-pinterest"></i>
+                </li>
+            </ul>
+            <a href="javascript:history.back()" class="back-button">Back</a>
         </div>
-    </div>
+    </section><br><br>
 </body>
 
 </html>

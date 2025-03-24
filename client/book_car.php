@@ -10,7 +10,7 @@ if (isset($_SESSION['user'])) {
 <html>
 
 <head>
-  <title>Home</title>
+  <title>TZ Car Rental | Booking</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery-3.3.1.min.js"></script>
@@ -178,7 +178,7 @@ if (isset($_SESSION['user'])) {
     }
 
     .logo {
-      color: #fff;
+      color: #ff7200;
       font-size: 35px;
       font-family: Arial;
       padding-left: 20px;
@@ -547,7 +547,7 @@ if (isset($_SESSION['user'])) {
     }
 
     .book-car-container .btnn {
-      background-color: #4CAF50;
+      background-color: #ff7200;
       color: #fff;
       padding: 10px 20px;
       border: none;
@@ -556,7 +556,8 @@ if (isset($_SESSION['user'])) {
     }
 
     .book-car-container .btnn:hover {
-      background-color: #3e8e41;
+      background-color: #ff5000;
+      /* or #ff3b00, #ff6600, or #ff5900 */
     }
 
     .row {
@@ -638,6 +639,14 @@ if (isset($_SESSION['user'])) {
                 </tr>
                 <tr>
                   <td>
+                    <label>Category:</label>
+                  </td>
+                  <td>
+                    <input type="text" value="<?= $car->CATEGORY ?>" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     <label>Fuel Type:</label>
                   </td>
                   <td>
@@ -662,12 +671,17 @@ if (isset($_SESSION['user'])) {
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <label>license:</label>
+                    <label>License:</label>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">
                     <img src="../images/<?= $_SESSION['user']->LICENSE_SS ?>" alt="" style="width:310px;height:150px">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <img src="../images/<?= $_SESSION['user']->LICENSE_BACK ?>" alt="" style="width:310px;height:150px">
                   </td>
                 </tr>
               </table>
@@ -679,7 +693,7 @@ if (isset($_SESSION['user'])) {
               <table>
                 <tr>
                   <td>
-                    <label>Book Date:</label>
+                    <label>Rent Date:</label>
                   </td>
                   <td>
                     <input type="datetime-local" name="book_date" required id="book_date">
@@ -757,12 +771,12 @@ if (isset($_SESSION['user'])) {
                 </tr>
                 <tr id="gcash-image-row">
                   <td colspan="2">
-                    <img src="../images/gcash.jpg" alt="" style="width:310px;height:450px" id="gcash-image" onclick="openImage('gcash-image')">
+                    <img src="../images/gcash.jpeg" alt="" style="width:310px;height:450px" id="gcash-image" onclick="openImage('gcash-image')">
                   </td>
                 </tr>
                 <tr id="paymaya-image-row" style="display: none;">
                   <td colspan="2">
-                    <img src="../images/paymaya.jpg" alt="" style="width:310px;height:450px" id="paymaya-image" onclick="openImage('paymaya-image')">
+                    <img src="../images/maya.jpeg" alt="" style="width:310px;height:450px" id="paymaya-image" onclick="openImage('paymaya-image')">
                   </td>
                 </tr>
                 <tr id="cod-image-row" style="display: none;">

@@ -12,13 +12,13 @@ if (isset($_SESSION['user'])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CaRs | Car Details</title>
+    <title>TZ Car Rental | About Us</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="body">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
@@ -28,13 +28,77 @@ if (isset($_SESSION['user'])) {
             margin: 0;
         }
 
+
+        /* Navbar Styling */
+        .navbar {
+            width: 100%;
+            height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background: #333;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon h2 {
+            font-size: 35px;
+            font-weight: bold;
+            padding-top: 10px;
+            color: #ff7200;
+        }
+
+        .menu ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .menu ul li {
+            margin-left: 40px;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .menu ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .menu ul li a:hover {
+            color: #ff7200;
+        }
+
+        .menu ul li img {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            margin-left: 15px;
+        }
+
+        .logout-button {
+            width: 100px;
+            height: 40px;
+            background: #ff7200;
+            border: none;
+            font-size: 18px;
+            border-radius: 1000px;
+            cursor: pointer;
+            color: white;
+            transition: 0.4s ease;
+            padding: 0.5em 1em;
+        }
+
         body {
-            font-family: 'Playfair Display', serif;
+            font-family: Arial, sans-serif;
             display: grid;
             background-image: url("../images/carbg2.jpg");
             background-size: cover;
             background-position: center;
-            align-content: center;
+            /* align-content: center; */
             min-height: 100vh;
         }
 
@@ -231,6 +295,35 @@ if (isset($_SESSION['user'])) {
         }
     </style>
 
+    <div class="cd">
+        <div class="main">
+            <div class="navbar">
+                <div class="icon">
+                    <h2 class="logo">TZ CAR RENTAL (URDANETA)</h2>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.php" id="#">HOME</a></li>
+                        <li><a href="aboutus.php">ABOUT</a></li>
+                        <li><a href="contactus.php">CONTACT</a></li>
+                        <li><a href="create_feedback.php">FEEDBACK</a></li>
+                        <li><a href="../logout.php" class="logout-button">LOGOUT</a></li>
+                        <li>
+                            <a href="profile.php">
+                                <img src="../images/profile.png" alt="Profile" width="30" height="30" style="border-radius: 50%;">
+                            </a>
+                        </li>
+                        <li>
+                            <p class="phello" style="color: white;">
+                                HELLO! &nbsp;<a id="pname"><?= $_SESSION['user']->FNAME . " " . $_SESSION['user']->LNAME ?></a>
+                            </p>
+                        </li>
+                        <li><a id="stat" href="bookinstatus.php">RENT STATUS</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <section>
         <div class="image">
             <div class="map-box">
@@ -243,9 +336,8 @@ if (isset($_SESSION['user'])) {
             <span><!-- line here --></span>
             <p>We are pleased you chose TZ CAR RENTAL (URDANETA) Urdaneta to rent a car, We have lots of cars to choose from and we are happy to serve you always anytime anywhere!</p>
             <ul class="links">
-        
-    
-                <li><a href="contactus.php">contact</a></li>
+
+
             </ul>
             <ul class="icons">
                 <li>
@@ -261,7 +353,6 @@ if (isset($_SESSION['user'])) {
                     <i class="fa fa-pinterest"></i>
                 </li>
             </ul>
-            <a href="javascript:history.back()" class="back-button">Back</a>
         </div>
     </section><br><br>
 </body>
